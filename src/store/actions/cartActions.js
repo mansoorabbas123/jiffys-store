@@ -46,10 +46,6 @@ export const updateQuantity = (id, IncDec) => async (dispatch, getState) => {
         payload: id,
       });
     }
-    // dispatch({
-    //   type: Constants.PRODUCT_QUANTITY_INCREASE,
-    //   payload: qty,
-    // });
   } catch (error) {
     console.log(error);
   }

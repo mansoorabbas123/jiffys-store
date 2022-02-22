@@ -34,19 +34,26 @@ const Home = () => {
           {"Categories".toUpperCase()}
         </h2>
         {/* <div className="flex flex-col justify-around m-5 mx-10 md:flex-row text-center bg-white py-5"> */}
-        <div
+        {/* <div
           className="grid  grid-col-3 md:grid-cols-4 text-center bg-white py-10"
           style={{ justifyItems: "center" }}
-        >
-          {loading ? (
+        > */}
+        {loading ? (
+          <div className="flex justify-center">
             <TailSpin color="#b02e46" height={80} width={80} />
-          ) : (
-            productCategories &&
-            productCategories.map((category, idx) => (
-              <Categories category={category} idx={idx} key={idx} />
-            ))
-          )}
-        </div>
+          </div>
+        ) : (
+          <div
+            className="grid  grid-col-3 md:grid-cols-4 text-center bg-white py-10"
+            style={{ justifyItems: "center" }}
+          >
+            {productCategories &&
+              productCategories.map((category, idx) => (
+                <Categories category={category} idx={idx} key={idx} />
+              ))}
+          </div>
+        )}
+        {/* </div> */}
 
         {/* Products by Categories  */}
         <div className="p-4 mt-10">

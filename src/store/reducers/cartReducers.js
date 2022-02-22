@@ -40,7 +40,6 @@ export const cartReducer = (state = initialState, action) => {
         };
       }
     case Constants.DELETE_FROM_CART:
-      console.log("action.paylaod...", action.payload);
       const filteredCartItems = state.cartItems.filter(
         (product) => product.id != action.payload
       );
@@ -66,7 +65,15 @@ export const cartReducer = (state = initialState, action) => {
       const decreaseProduct = state.cartItems.find(
         (product) => product.id == action.payload
       );
-      if (decreaseProduct.qty > 1) {
+      if (decreaseProduct.qty === 1) {
+        const updatedCartItems = state.cartItems.filter(
+          (product) => product.id != action.payload
+        );
+        return {
+          ...state,
+          cartItems: updatedCartItems,
+        };
+      } else if (decreaseProduct.qty > 1) {
         decreaseProduct.qty--;
       }
       const updatedItemDec = state.cartItems.map((product) =>

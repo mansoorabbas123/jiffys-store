@@ -1,10 +1,29 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as Actions from "../../store/actions";
 import "./productCard.css";
+import CartQty from "../CartQty";
 
 const ProductCard = ({ product }) => {
+  const cartReducer = useSelector((state) => state.cart);
+  const { cartItems } = cartReducer;
+
+  const renderButtons = (product) => {
+    if (cartItems.find((p) => p.id == product.id)) {
+      return <CartQty product={product} styleVariant="productCard" />;
+    } else {
+      return (
+        <a
+          className="text-white w-24 rounded mx-auto mb-4 btn"
+          onClick={() => dispatch(Actions.addToCartAction(product, 1))}
+        >
+          ADD
+        </a>
+      );
+    }
+  };
+
   const dispatch = useDispatch();
   return (
     <div
@@ -25,12 +44,7 @@ const ProductCard = ({ product }) => {
         </NavLink>
 
         <p className=" text-slate-600 my-8 font-bold">Rs. {product.price}</p>
-        <a
-          className="text-white w-24 rounded mx-auto mb-4 btn"
-          onClick={() => dispatch(Actions.addToCartAction(product, 1))}
-        >
-          ADD
-        </a>
+        {renderButtons(product)}
       </div>
     </div>
   );

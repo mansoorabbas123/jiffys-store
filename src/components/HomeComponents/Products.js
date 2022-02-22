@@ -91,7 +91,9 @@ const Products = ({ category }) => {
   return (
     <div>
       {loading ? (
-        <TailSpin color="#b02e46" height={80} width={80} />
+        <div className="flex justify-center">
+          <TailSpin color="#b02e46" height={80} width={80} />
+        </div>
       ) : (
         <>
           {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-2 py-5"> */}
