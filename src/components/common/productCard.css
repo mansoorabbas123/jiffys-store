@@ -1,3 +1,9 @@
 .visitedColor:visited {
   background-color: black;
 }
+img {
+  transition: all 500ms;
+}
+.transitImage:hover img {
+  transform: scale(1.5);
+}

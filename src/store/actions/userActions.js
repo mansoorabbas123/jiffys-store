@@ -40,3 +40,14 @@ export const userLoginAction = (username, password) => async (dispatch) => {
     });
   }
 };
+
+export const userLogoutAction = () => async (dispatch) => {
+  try {
+    localStorage.removeItem("user");
+    dispatch({
+      type: Constants.USER_LOGOUT,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

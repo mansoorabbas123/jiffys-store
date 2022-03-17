@@ -24,7 +24,7 @@ const Categories = ({ category, idx }) => {
         <img
           src={categoryImages[idx]}
           alt=""
-          style={{ height: "16rem", width: "100%" }}
+          style={{ height: "16rem", width: "100%", objectFit: "cover" }}
         />
         <h4
           className="p-2 text-white rounded-b-md"

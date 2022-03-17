@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
     } else {
       return (
         <a
-          className="text-white w-24 rounded mx-auto mb-4 btn"
+          className="text-white w-28 rounded ml-2 mb-4 btn mt-2"
           onClick={() => dispatch(Actions.addToCartAction(product, 1))}
         >
           ADD
@@ -27,23 +27,40 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   return (
     <div
-      className=" text-center border my-5 bg-white hover:shadow-md mx-auto w-60"
+      className=" text-center border my-5 bg-white hover:shadow-md mx-auto w-60 relative"
       key={product.id}
     >
+      <div className="absolute top-1 left-1 z-10">
+        <div
+          className="p-1 rounded text-white text-sm"
+          style={{
+            background: "#b02e46",
+            boxShadow: "1px 2px 5px 0px rgba(0,0,0,0.75)",
+          }}
+        >
+          4% OFF
+        </div>
+        <div
+          className="p-1 rounded mt-2 text-white bg-lime-500 text-sm"
+          style={{ boxShadow: "1px 2px 5px 0px rgba(0,0,0,0.75)" }}
+        >
+          84 pcs
+        </div>
+      </div>
+
       <NavLink to={`/product/${product.id}`}>
         <div
-          className="flex justify-center items-center"
-          style={{ minHeight: "10rem" }}
+          className="flex w-full justify-center items-center bg-slate-100 relative transitImage"
+          style={{ minHeight: "16rem" }}
         >
-          <img src={product.image} alt="" className="w-24 m-auto" />
+          <img src={product.image} alt="" className="w-24 m-auto absolute" />
         </div>
       </NavLink>
       <div className="flex flex-col justify-between">
         <NavLink to={`/product/${product.id}`}>
-          <p className="text-md"> {product.title.slice(0, 20)}....</p>
+          <p className="text-md mt-2"> {product.title.slice(0, 20)}....</p>
         </NavLink>
-
-        <p className=" text-slate-600 my-8 font-bold">Rs. {product.price}</p>
+        <p className=" text-slate-600 text-lg font-bold">Rs. {product.price}</p>
         {renderButtons(product)}
       </div>
     </div>

@@ -1,21 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import * as Actions from "../store/actions";
 import Footer from "./common/Footer";
 import logo from "../assets/logo/logo.png";
 import { FaUserCircle } from "react-icons/fa";
 import { BsCartFill } from "react-icons/bs";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import React from "react";
+// import Box from "@mui/material/Box";
+// import Drawer from "@mui/material/Drawer";
+// import Button from "@mui/material/Button";
+// import List from "@mui/material/List";
+// import Divider from "@mui/material/Divider";
+// import ListItem from "@mui/material/ListItem";
+// import ListItemIcon from "@mui/material/ListItemIcon";
+// import ListItemText from "@mui/material/ListItemText";
+// import InboxIcon from "@mui/icons-material/MoveToInbox";
+// import MailIcon from "@mui/icons-material/Mail";
+import React, { useEffect } from "react";
 // import "./layout.css";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Button, Menu } from "@material-ui/core";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -25,54 +28,69 @@ const Layout = () => {
   const { error, loading, user } = userReducer;
 
   // material ui drawer
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  // const [state, setState] = React.useState({
+  //   top: false,
+  //   left: false,
+  //   bottom: false,
+  //   right: false,
+  // });
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  // const toggleDrawer = (anchor, open) => (event) => {
+  //   if (
+  //     event.type === "keydown" &&
+  //     (event.key === "Tab" || event.key === "Shift")
+  //   ) {
+  //     return;
+  //   }
 
-    setState({ ...state, [anchor]: open });
+  //   setState({ ...state, [anchor]: open });
+  // };
+
+  // const list = (anchor) => (
+  //   <Box
+  //     sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+  //     role="presentation"
+  //     onClick={toggleDrawer(anchor, false)}
+  //     onKeyDown={toggleDrawer(anchor, false)}
+  //   >
+  //     <List>
+  //       {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+  //         <ListItem button key={text}>
+  //           <ListItemIcon>
+  //             {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+  //           </ListItemIcon>
+  //           <ListItemText primary={text} />
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //     <Divider />
+  //     <List>
+  //       {["All mail", "Trash", "Spam"].map((text, index) => (
+  //         <ListItem button key={text}>
+  //           <ListItemIcon>
+  //             {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+  //           </ListItemIcon>
+  //           <ListItemText primary={text} />
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //   </Box>
+  // );
+
+  // material ui menu for logout popup
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const list = (anchor) => (
-    <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(Actions.userLogoutAction());
+  };
 
   const style = {
     nav: {
@@ -103,7 +121,26 @@ const Layout = () => {
             <div className="flex">
               <div className="mx-3">
                 {user.token ? (
-                  user.username
+                  <div>
+                    <Button
+                      aria-controls="simple-menu"
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                    >
+                      {user.username}
+                    </Button>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
+                  </div>
                 ) : (
                   <Link to={"/login"}>
                     {" "}

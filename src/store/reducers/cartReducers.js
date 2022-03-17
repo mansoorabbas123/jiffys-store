@@ -1,13 +1,11 @@
 import * as Constants from "../constants/cartConstants";
 
 let cartItems = localStorage.getItem("cartItems");
-console.log(typeof cartItems);
 if (cartItems) {
   cartItems = JSON.parse(localStorage.getItem("cartItems"));
 } else {
   cartItems = [];
 }
-console.log(cartItems);
 
 const initialState = {
   cartItems: [...cartItems],
@@ -39,6 +37,7 @@ export const cartReducer = (state = initialState, action) => {
           cartItems: [...state.cartItems, item],
         };
       }
+
     case Constants.DELETE_FROM_CART:
       const filteredCartItems = state.cartItems.filter(
         (product) => product.id != action.payload
@@ -48,6 +47,7 @@ export const cartReducer = (state = initialState, action) => {
         ...state,
         cartItems: filteredCartItems,
       };
+
     case Constants.PRODUCT_QUANTITY_INCREASE:
       const increaseProduct = state.cartItems.find(
         (product) => product.id == action.payload

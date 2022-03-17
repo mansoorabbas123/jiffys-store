@@ -5,6 +5,7 @@ import {
   useParams,
   useLocation,
   Link,
+  useNavigate,
 } from "react-router-dom";
 import * as Actions from "../store/actions";
 import { TailSpin } from "react-loader-spinner";
@@ -12,6 +13,7 @@ import CartQty from "../components/CartQty";
 
 const CartScreen = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   // const qty = searchParams.get("qty");
   // const { id } = useParams();
   // const location = useLocation();
@@ -139,7 +141,11 @@ const CartScreen = () => {
               style={{ width: "80%" }}
             ></div>
 
-            <a className="btn my-5" style={{ width: "80%", marginLeft: "10%" }}>
+            <a
+              className="btn my-5"
+              style={{ width: "80%", marginLeft: "10%" }}
+              onClick={() => navigate("/checkout")}
+            >
               CHECKOUT
             </a>
           </div>
