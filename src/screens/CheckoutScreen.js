@@ -71,12 +71,12 @@ const CheckoutScreen = () => {
                 <input type="radio" name="" id="" />
               </td>
             </tr>
-            <tr>
+            {/* <tr>
               <td className="text-slate-500">Urgent Delivery (Rs 120)</td>
               <td>
                 <input type="radio" name="" id="" />
               </td>
-            </tr>
+            </tr> */}
           </table>
         </div>
       </div>

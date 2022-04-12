@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import * as Actions from "../store/actions";
 import { useDispatch } from "react-redux";
 import { TailSpin } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 const OrderSummaryComp = () => {
   const dispatch = useDispatch();
@@ -48,10 +49,14 @@ const OrderSummaryComp = () => {
     <div className="md:w-[40rem] mt-10 mr-4 relative">
       <div className="p-2 mb-5">
         <div className="flex justify-between">
-          <h2 className="text-lg p-3">Your Information</h2>
-          <a className="text-lg p-3" style={{ color: "#b02e46" }}>
+          <h2 className="text-lg p-3 font-bold">Your Information</h2>
+          <Link
+            to="/account"
+            className="text-lg p-3"
+            style={{ color: "#b02e46" }}
+          >
             Edit
-          </a>
+          </Link>
         </div>
         <div className="border-b-2"></div>
 
@@ -60,10 +65,14 @@ const OrderSummaryComp = () => {
       </div>
       <div className="p-2 mb-5">
         <div className="flex justify-between">
-          <h2 className="text-lg p-3">Shipping Address</h2>
-          <a className="text-lg p-3" style={{ color: "#b02e46" }}>
+          <h2 className="text-lg p-3 font-bold">Shipping Address</h2>
+          <Link
+            to="/checkout"
+            className="text-lg p-3"
+            style={{ color: "#b02e46" }}
+          >
             Edit
-          </a>
+          </Link>
         </div>
         <div className="border-b-2 mb-3"></div>
         <p className="text-slate-700 ">

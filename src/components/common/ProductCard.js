@@ -67,7 +67,7 @@ const ProductCard = ({ product }) => {
         <NavLink to={`/product/${product.id}`}>
           <p className="text-md mt-2"> {product.title.slice(0, 20)}....</p>
         </NavLink>
-        <p className=" text-slate-600 text-lg font-bold">Rs. {product.price}</p>
+        <p className=" text-slate-600 text-lg font-bold">$ {product.price}</p>
         {renderButtons(product)}
       </div>
     </div>

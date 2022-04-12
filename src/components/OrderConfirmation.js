@@ -78,10 +78,10 @@ const OrderConfirmation = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="p-2 mb-5">
           <div className="flex justify-between">
-            <h2 className="text-lg p-3">Your Information</h2>
-            <a href="" className="text-lg p-3" style={{ color: "#b02e46" }}>
+            <h2 className="text-lg p-3 font-bold">Your Information</h2>
+            {/* <a href="" className="text-lg p-3" style={{ color: "#b02e46" }}>
               Edit
-            </a>
+            </a> */}
           </div>
           <div className="border-b-2"></div>
 
@@ -90,7 +90,7 @@ const OrderConfirmation = () => {
         </div>
         <div className="p-2 mb-5">
           <div className="flex justify-start">
-            <h2 className="text-lg p-3">Shipping Address</h2>
+            <h2 className="text-lg p-3 font-bold">Shipping Address</h2>
           </div>
           <div className="border-b-2 mb-3"></div>
 
