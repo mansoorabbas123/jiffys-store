@@ -18,7 +18,7 @@ export const addToCartAction = (product, qty) => async (dispatch, getState) => {
       "cartItems",
       JSON.stringify(getState().cart.cartItems)
     );
-    NotificationManager.success("Added to cart");
+    NotificationManager.success("Added to cart", "", 500);
   } catch (error) {
     console.log(error);
   }

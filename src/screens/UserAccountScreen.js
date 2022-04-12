@@ -245,7 +245,9 @@ const UserAccountScreen = () => {
                   style={{ marginTop: "6.4px" }}
                   className="text-xs text-slate-600"
                 />{" "}
-                <span className="ml-2 text-slate-600"></span>
+                <span className="ml-2 text-slate-600">
+                  {clientProfile.address ? clientProfile.address : "none"}
+                </span>
               </div>
             )}
 

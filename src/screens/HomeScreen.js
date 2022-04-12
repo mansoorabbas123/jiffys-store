@@ -53,13 +53,23 @@ const Home = () => {
           </div>
         )}
 
+        {productCategories && productCategories.length > 1
+          ? productCategories.slice(0, 2).map((category, idx) => {
+              return (
+                <div className="p-4 mt-10" key={category.id}>
+                  <Products category_id={category.id} list={idx + 1} />
+                </div>
+              );
+            })
+          : "categories not found"}
+
         {/* Products by Categories  */}
-        <div className="p-4 mt-10">
+        {/* <div className="p-4 mt-10">
           <Products category_id={1} list={1} />
         </div>
         <div className="p-4 mt-10">
           <Products category_id={3} list={2} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
