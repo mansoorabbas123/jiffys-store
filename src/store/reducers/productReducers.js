@@ -4,8 +4,10 @@ const initialStateForProducts = {
   productList: [],
   productDetail: null,
   productCategories: [],
-  productListByCategory: [],
-  productListWithMultiCategory: {},
+  productListByCategory: null,
+  // productListWithMultiCategory: {},
+  homepageProductList_I: null,
+  homepageProductList_II: null,
   error: "",
 };
 
@@ -29,14 +31,16 @@ export const products = (state = initialStateForProducts, action) => {
       return {
         ...state,
         loading: false,
-        productList: [],
+        productList: null,
         error: action.payload,
       };
     case Constants.PRODUCT_CATEGORIES:
+      const { rows } = action.payload;
+      console.log("rows ", rows);
       return {
         ...state,
         loading: false,
-        productCategories: action.payload,
+        productCategories: rows,
       };
     case Constants.PRODUCT_CATEGORIES_FAIL:
       return {
@@ -56,16 +60,45 @@ export const products = (state = initialStateForProducts, action) => {
         loading: false,
         error: action.payload,
       };
-    case Constants.PRODUCT_LIST_WITH_MULTI_CATEGORY:
+
+    // case Constants.PRODUCT_LIST_WITH_MULTI_CATEGORY:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     productListWithMultiCategory: {
+    //       ...state.productListWithMultiCategory,
+    //       [action.payload.category]: action.payload.data,
+    //     },
+    //   };
+    case Constants.HOME_PAGE_PRODUCTS_BY_CATEGORY_I:
+      console.log("action.HOME_PAGE_PRODUCTS_BY_CATEGORY_I", action.payload);
       return {
         ...state,
         loading: false,
-        productListWithMultiCategory: {
-          ...state.productListWithMultiCategory,
-          [action.payload.category]: action.payload.data,
-        },
+        homepageProductList_I: action.payload,
       };
-    case Constants.PRODUCT_LIST_WITH_MULTI_CATEGORY_FAIL:
+
+    // case Constants.PRODUCT_LIST_WITH_MULTI_CATEGORY_FAIL:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     error: action.payload,
+    //   };
+    case Constants.HOME_PAGE_PRODUCTS_BY_CATEGORY_I_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case Constants.HOME_PAGE_PRODUCTS_BY_CATEGORY_II:
+      console.log("action.HOME_PAGE_PRODUCTS_BY_CATEGORY_II", action.payload);
+      return {
+        ...state,
+        loading: false,
+        homepageProductList_II: action.payload,
+      };
+    case Constants.HOME_PAGE_PRODUCTS_BY_CATEGORY_II_ERROR:
       return {
         ...state,
         loading: false,

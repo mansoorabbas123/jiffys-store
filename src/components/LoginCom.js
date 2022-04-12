@@ -5,11 +5,21 @@ import { ImGoogle3 } from "react-icons/im";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { TailSpin } from "react-loader-spinner";
+import { useForm } from "react-hook-form";
 
 const LoginCom = ({ variant }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userName, setUserName] = useState("");
+
+  // const {register, handleSubmit, formState: { errors }} = useForm();
+
+  // console.log("form errors",errors);
+
+  // const submit = (data) => {
+  //   console.log("form data", data);
+  // }
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [inputError, setInputError] = useState("");
 
@@ -17,17 +27,23 @@ const LoginCom = ({ variant }) => {
   const { error, user, loading } = userInfoReducer;
 
   const sumbitHandler = () => {
+    const loginInfo = {
+      email,
+      password,
+    };
+    console.log("loginInfo in loginComp: ", loginInfo);
     dispatch(Actions.userLoader(true));
-    dispatch(Actions.userLoginAction(userName, password));
-    setUserName("");
+    dispatch(Actions.userLoginAction(loginInfo, navigate));
+    setEmail("");
     setPassword("");
   };
 
   useEffect(() => {
     if (user.token) {
       navigate("/");
-    } else if (error.message) {
-      setInputError("error");
+    } else if (error) {
+      setInputError(error);
+      // console.log(error.response);
     }
   }, [user, error]);
 
@@ -42,9 +58,12 @@ const LoginCom = ({ variant }) => {
           <div className="flex justify-between my-5">
             <h2 className="text-xl mb-3">Sign in</h2>
             <p className="mt-1 ">
-              or{" "}
-              <Link to="/register" className="text-sky-700 ">
-                create an account
+              <span className="text-slate-400">or </span>
+              <Link
+                to="/register"
+                className="text-slate-500 hover:text-slate-700"
+              >
+                Create an Account
               </Link>
             </p>
           </div>
@@ -57,35 +76,49 @@ const LoginCom = ({ variant }) => {
               Sign in with Google
             </button>
           </div>
-          <p className="text-center">Or</p>
+          <p className="text-center my-5">OR</p>
           <div className="">
+            <label htmlFor="email" className="text-black">
+              Email
+            </label>
             <input
-              type="text"
-              name=""
+              type="email"
+              name="email"
               id=""
               className="w-full my-1 border-2 p-1"
-              placeholder="User Name"
-              onChange={(e) => setUserName(e.target.value)}
+              placeholder="enter your email"
+              onChange={(e) => setEmail(e.target.value)}
               required
-              value={userName}
+              value={email}
               onFocus={() => setInputError("")}
             />
           </div>
           <div className="">
+            <label htmlFor="password" className="text-black">
+              Password
+            </label>
             <input
               type="password"
               name=""
               id=""
               className="w-full my-1 border-2 p-1"
-              placeholder="Password"
+              placeholder="enter your password"
               onChange={(e) => setPassword(e.target.value)}
               required
               value={password}
               onFocus={() => setInputError("")}
             />
           </div>
+          <p>
+            <Link
+              to="/forgetPassword"
+              className="text-slate-500 hover:text-slate-700 mt-5"
+            >
+              Forget Password
+            </Link>
+          </p>
           {inputError ? (
-            <p className="text-red-500 text-sm">user not found</p>
+            <p className="text-red-500 text-sm">{error.data.message}</p>
           ) : (
             ""
           )}

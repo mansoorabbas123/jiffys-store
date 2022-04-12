@@ -19,7 +19,11 @@ const Home = () => {
   // to capitalize word
 
   if (error) {
-    return <h2>error</h2>;
+    return (
+      <div className="flex justify-center items-center pt-24">
+        <h1 className="text-3xl">Server is Down</h1>
+      </div>
+    );
   }
 
   return (
@@ -51,10 +55,10 @@ const Home = () => {
 
         {/* Products by Categories  */}
         <div className="p-4 mt-10">
-          <Products category={"electronics"} />
+          <Products category_id={1} list={1} />
         </div>
         <div className="p-4 mt-10">
-          <Products category={"jewelery"} />
+          <Products category_id={3} list={2} />
         </div>
       </div>
     </div>

@@ -16,8 +16,8 @@ const Categories = ({ category, idx }) => {
   };
   return (
     <NavLink
-      to={`/category/${category}`}
-      key={category}
+      to={`/shop?category_id=${category.id}`}
+      key={category.id}
       className="border-2 w-80 rounded-md hover:shadow-xl hover:cursor-pointer"
     >
       <div className="mx-auto">
@@ -30,7 +30,7 @@ const Categories = ({ category, idx }) => {
           className="p-2 text-white rounded-b-md"
           style={{ backgroundColor: "#b02e46" }}
         >
-          {toCapitalize(category)}
+          {toCapitalize(category.title)}
         </h4>
       </div>
     </NavLink>

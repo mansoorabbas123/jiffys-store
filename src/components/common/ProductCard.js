@@ -8,8 +8,12 @@ import CartQty from "../CartQty";
 const ProductCard = ({ product }) => {
   const cartReducer = useSelector((state) => state.cart);
   const { cartItems } = cartReducer;
+  const dispatch = useDispatch();
 
   const renderButtons = (product) => {
+    console.log("product in productCard", product);
+    console.log("product image in productCard", product.productImages);
+
     if (cartItems.find((p) => p.id == product.id)) {
       return <CartQty product={product} styleVariant="productCard" />;
     } else {
@@ -24,13 +28,12 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  const dispatch = useDispatch();
   return (
     <div
       className=" text-center border my-5 bg-white hover:shadow-md mx-auto w-60 relative"
       key={product.id}
     >
-      <div className="absolute top-1 left-1 z-10">
+      <div className="absolute top-1 left-1" style={{ zIndex: 4 }}>
         <div
           className="p-1 rounded text-white text-sm"
           style={{
@@ -53,7 +56,11 @@ const ProductCard = ({ product }) => {
           className="flex w-full justify-center items-center bg-slate-100 relative transitImage"
           style={{ minHeight: "16rem" }}
         >
-          <img src={product.image} alt="" className="w-24 m-auto absolute" />
+          <img
+            src={product?.productImages[0].url}
+            alt=""
+            className="w-24 m-auto absolute"
+          />
         </div>
       </NavLink>
       <div className="flex flex-col justify-between">

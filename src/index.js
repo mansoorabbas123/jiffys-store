@@ -12,11 +12,15 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+import { CookiesProvider } from "react-cookie";
+
 ReactDOM.render(
   <Provider store={store}>
     <div>
       <Favicon url={favicon} />
-      <App />
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
     </div>
   </Provider>,
   document.getElementById("root")

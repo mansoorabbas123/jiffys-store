@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../store/actions";
 import { Link, useLocation } from "react-router-dom";
@@ -9,16 +9,38 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { TailSpin } from "react-loader-spinner";
 
-const Products = ({ category }) => {
+const Products = ({ category_id, list }) => {
+  console.log("category_id", category_id);
   const location = useLocation();
   const dispatch = useDispatch();
   const productsReducer = useSelector((state) => state.products);
-  const { error, loading, productListWithMultiCategory } = productsReducer;
+  const { error, loading } = productsReducer;
+  let [productList, setProductList] = useState(null);
+
+  const { homepageProductList_I, homepageProductList_II } = productsReducer;
+
+  console.log("productList", productList);
 
   useEffect(() => {
-    dispatch(Actions.productLoader(true));
-    dispatch(Actions.productListWithMultiCategoryAction(category, 4));
-  }, []);
+    if (productsReducer) {
+      if (list == 1 && !productList) {
+        console.log("list 1");
+        setProductList(homepageProductList_I);
+      } else if (list == 2 && !productList) {
+        console.log("list 2");
+        setProductList(homepageProductList_II);
+      }
+    }
+    if (!homepageProductList_I && list == 1) {
+      dispatch(Actions.productLoader(true));
+      dispatch(Actions.homePageProductsByCategory_I(category_id, 4));
+    }
+
+    if (!homepageProductList_II && list == 2) {
+      dispatch(Actions.productLoader(true));
+      dispatch(Actions.homePageProductsByCategory_II(category_id, 4));
+    }
+  }, [homepageProductList_I, homepageProductList_II]);
 
   const responsive = {
     superLargeDesktop: {
@@ -70,19 +92,14 @@ const Products = ({ category }) => {
     return <h2>error</h2>;
   }
   let renderProducts = () => {
-    if (
-      productListWithMultiCategory &&
-      productListWithMultiCategory[category]
-    ) {
-      return productListWithMultiCategory[category]
-        .slice(0, 5)
-        .map((product) => {
-          return (
-            <div key={product.id} className="my-16">
-              <ProductCard product={product} />
-            </div>
-          );
-        });
+    if (productList?.count > 0) {
+      return productList.rows.map((product) => {
+        return (
+          <div key={product.id} className="my-16">
+            <ProductCard product={product} />
+          </div>
+        );
+      });
     } else {
       return <h4>No Products</h4>;
     }
@@ -99,10 +116,10 @@ const Products = ({ category }) => {
           {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-2 py-5"> */}
           <div className="bg-white">
             <Link
-              to={`/category/${category}`}
-              className="flex justify-between p-2"
+              to={`/shop?category_id=${category_id}`}
+              className="flex justify-end p-2"
             >
-              <h2 className="font-bold ml-4">{category.toUpperCase()}</h2>
+              {/* <h2 className="font-bold ml-4">{category.toUpperCase()}</h2> */}
               <p className="text-uderline mr-4">View All</p>
             </Link>
             <div className="border-b-2 m-auto" style={{ width: "91vw" }}></div>

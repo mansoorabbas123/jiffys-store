@@ -1,14 +1,22 @@
 import * as Constants from "../constants/cartConstants";
 
 let cartItems = localStorage.getItem("cartItems");
+let shippingAddress = localStorage.getItem("shippingAddress");
 if (cartItems) {
   cartItems = JSON.parse(localStorage.getItem("cartItems"));
 } else {
   cartItems = [];
 }
 
+if (shippingAddress) {
+  shippingAddress = JSON.parse(localStorage.getItem("shippingAddress"));
+} else {
+  shippingAddress = {};
+}
+
 const initialState = {
   cartItems: [...cartItems],
+  shippingAddress: shippingAddress,
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -89,7 +97,12 @@ export const cartReducer = (state = initialState, action) => {
         ...state,
         cartItems: [],
       };
-
+    case Constants.ADD_SHIPPING_ADDRESS:
+      return {
+        ...state,
+        loading: false,
+        shippingAddress: action.payload,
+      };
     default:
       return state;
   }

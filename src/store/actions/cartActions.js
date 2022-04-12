@@ -1,5 +1,7 @@
 import axios from "axios";
 import * as Constants from "../constants";
+import * as Actions from "../actions";
+import { NotificationManager } from "react-notifications";
 
 export const addToCartAction = (product, qty) => async (dispatch, getState) => {
   try {
@@ -16,6 +18,7 @@ export const addToCartAction = (product, qty) => async (dispatch, getState) => {
       "cartItems",
       JSON.stringify(getState().cart.cartItems)
     );
+    NotificationManager.success("Added to cart");
   } catch (error) {
     console.log(error);
   }
@@ -57,7 +60,25 @@ export const clearCartAction = () => async (dispatch) => {
     dispatch({
       type: Constants.CLEAR_CART,
     });
+    localStorage.removeItem("cartItems");
   } catch (error) {
     console.log(error);
   }
 };
+
+export const addShippingAddress =
+  (ShippingAddress, navigate) => async (dispatch) => {
+    console.log(ShippingAddress);
+    try {
+      dispatch({
+        type: Constants.ADD_SHIPPING_ADDRESS,
+        payload: ShippingAddress,
+      });
+      localStorage.setItem("shippingAddress", JSON.stringify(ShippingAddress));
+      dispatch(Actions.productLoader(false));
+      navigate("/order");
+    } catch (error) {
+      dispatch(Actions.productLoader(false));
+      console.log(error);
+    }
+  };

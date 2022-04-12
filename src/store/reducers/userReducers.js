@@ -7,6 +7,7 @@ const user = localStorage.getItem("user")
 const initialState = {
   loading: false,
   user: { ...user },
+  clientProfile: {},
   error: "",
 };
 
@@ -15,7 +16,7 @@ export const userReducer = (state = initialState, action) => {
     case Constants.USER_LOADER:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case Constants.USER_LOGIN_SUCCESS:
       return {
@@ -35,7 +36,16 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {},
+        clientProfile: {},
       };
+
+    case Constants.GET_CLIENT_PROFILE:
+      return {
+        ...state,
+        clientProfile: action.payload,
+        loading: false,
+      };
+
     default:
       return state;
   }

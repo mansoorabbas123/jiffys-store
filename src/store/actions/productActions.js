@@ -1,6 +1,6 @@
 import * as Constants from "../constants";
 import axios from "axios";
-import { PRODUCT_CATEGORIES_FAIL } from "../constants";
+import { Domain } from "../../config";
 
 export const productLoader = (value) => {
   return (dispatch) => {
@@ -11,12 +11,31 @@ export const productLoader = (value) => {
   };
 };
 
-export const productListAction = () => async (dispatch) => {
+// export const productListAction = () => async (dispatch) => {
+//   try {
+//     const { data } = await axios.get("https://fakestoreapi.com/products");
+//     dispatch({
+//       type: Constants.PRODUCT_LIST,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: Constants.PRODUCT_LIST_FAIL,
+//       payload: error,
+//     });
+//   }
+// };
+
+export const productListAction = (category_id, limit) => async (dispatch) => {
   try {
-    const { data } = await axios.get("https://fakestoreapi.com/products");
+    const { data } = await axios.post(`${Domain}/api/product/view`, {
+      page: 0,
+      limit,
+      category_id,
+    });
     dispatch({
       type: Constants.PRODUCT_LIST,
-      payload: data,
+      payload: data.result,
     });
   } catch (error) {
     dispatch({
@@ -28,12 +47,15 @@ export const productListAction = () => async (dispatch) => {
 
 export const productDetailAction = (id) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`https://fakestoreapi.com/products/${id}`);
+    const { data } = await axios.get(`${Domain}/api/product/view/${id}`);
+    console.log(data.result);
     dispatch({
       type: Constants.PRODUCT_DETAIL,
-      payload: data,
+      payload: data.result,
     });
   } catch (error) {
+    console.log("product detail error", error);
+    console.log("product detail error response", error.response);
     dispatch({
       type: Constants.PRODUCT_DETAIL_FAIL,
       payload: error,
@@ -43,22 +65,26 @@ export const productDetailAction = (id) => async (dispatch) => {
 
 export const productCatgoriesAction = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(
-      "https://fakestoreapi.com/products/categories"
-    );
+    const { data } = await axios.post(`${Domain}/api/product/category/view`, {
+      page: 0,
+      limit: 4,
+    });
+    console.log(data);
     dispatch({
       type: Constants.PRODUCT_CATEGORIES,
-      payload: data,
+      payload: data.result,
     });
   } catch (error) {
+    console.log("error in category action", error);
+    console.log("errors response ", error.response);
     dispatch({
-      type: PRODUCT_CATEGORIES_FAIL,
-      payload: error,
+      type: Constants.PRODUCT_CATEGORIES_FAIL,
+      payload: error.response,
     });
   }
 };
 
-export const productListByCategoryAction = (category) => async (dispatch) => {
+export const productListByIdAction = (category) => async (dispatch) => {
   try {
     console.log("Calling product list === ", category);
     const { data } = await axios.get(
@@ -76,20 +102,44 @@ export const productListByCategoryAction = (category) => async (dispatch) => {
   }
 };
 
-export const productListWithMultiCategoryAction =
-  (category, limit) => async (dispatch) => {
+export const homePageProductsByCategory_I =
+  (category_id, limit) => async (dispatch) => {
     try {
-      const { data } = await axios.get(
-        `https://fakestoreapi.com/products/category/${category}?${limit}`
-      );
+      const { data } = await axios.post(`${Domain}/api/product/view`, {
+        page: 0,
+        limit,
+        category_id,
+      });
+      console.log("homePageProductsByCategory_I data", data);
       dispatch({
-        type: Constants.PRODUCT_LIST_WITH_MULTI_CATEGORY,
-        payload: { category, data },
+        type: Constants.HOME_PAGE_PRODUCTS_BY_CATEGORY_I,
+        payload: data.result,
       });
     } catch (error) {
       dispatch({
-        type: Constants.PRODUCT_LIST_WITH_MULTI_CATEGORY_FAIL,
-        payload: error,
+        type: Constants.HOME_PAGE_PRODUCTS_BY_CATEGORY_I_ERROR,
+        payload: error.response,
+      });
+    }
+  };
+
+export const homePageProductsByCategory_II =
+  (category_id, limit) => async (dispatch) => {
+    try {
+      const { data } = await axios.post(`${Domain}/api/product/view`, {
+        page: 0,
+        limit,
+        category_id,
+      });
+      console.log("homePageProductsByCategory_II data", data);
+      dispatch({
+        type: Constants.HOME_PAGE_PRODUCTS_BY_CATEGORY_II,
+        payload: data.result,
+      });
+    } catch (error) {
+      dispatch({
+        type: Constants.HOME_PAGE_PRODUCTS_BY_CATEGORY_II_ERROR,
+        payload: error.response,
       });
     }
   };

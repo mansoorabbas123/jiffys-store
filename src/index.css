@@ -8,3 +8,15 @@
 .btn:hover {
   background-color: #ce465f;
 }
+
+.btn-white {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid #b02e46;
+}
+
+.btn-white:hover {
+  color: rgba(0, 0, 0, 0.712);
+  border: 1px solid #b02e46c7;
+  cursor: pointer;
+}

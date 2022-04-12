@@ -99,7 +99,7 @@ const Layout = () => {
       top: "0",
       left: "0",
       width: "100%",
-      zIndex: 1,
+      zIndex: 5,
     },
   };
 
@@ -136,8 +136,9 @@ const Layout = () => {
                       open={Boolean(anchorEl)}
                       onClose={handleClose}
                     >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <Link to="/account">
+                        <MenuItem onClick={handleClose}>My account</MenuItem>
+                      </Link>
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                   </div>

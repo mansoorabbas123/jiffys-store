@@ -7,6 +7,7 @@ const rootReducers = combineReducers({
   products: reducers.products,
   userInfo: reducers.userReducer,
   cart: reducers.cartReducer,
+  order: reducers.orderReducer,
 });
 
 const middlewares = [thunk];

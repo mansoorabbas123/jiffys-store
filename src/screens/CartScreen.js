@@ -20,6 +20,7 @@ const CartScreen = () => {
   const dispatch = useDispatch();
   const cartReducer = useSelector((state) => state.cart);
   const { cartItems } = cartReducer;
+  console.log(cartItems);
   // const [qty, setQty] = useState(1);
 
   // useEffect(() => {
@@ -32,7 +33,7 @@ const CartScreen = () => {
     <div>
       <h1 className="ml-10 py-10 text-3xl">Cart</h1>
       {/* <div className="bg-white"> */}
-      {cartItems.length == 0 ? (
+      {!cartItems.length > 0 ? (
         <p className="text-slate-600 text-center text-3xl m-5">Cart is empty</p>
       ) : (
         <div className="flex flex-col items-center lg:flex-row py-10 lg:items-start bg-white px-16 ">
@@ -55,7 +56,11 @@ const CartScreen = () => {
                     <tr key={product.id}>
                       <Link to={`/product/${product.id}`}>
                         <td className="p-8">
-                          <img src={product.image} className="w-20" alt="" />
+                          <img
+                            src={product.productImages[0].url}
+                            className="w-20"
+                            alt=""
+                          />
                         </td>
                         <td>{product.title.slice(0, 20)}...</td>
                       </Link>
@@ -110,8 +115,8 @@ const CartScreen = () => {
             </div>
             <div className="flex justify-end m-5">
               <a
-                className="btn my-5"
-                className="w-30 btn ml-auto"
+                className="btn my-5 w-30 btn ml-auto"
+                // className=""
                 onClick={() => dispatch(Actions.clearCartAction())}
               >
                 Clear Cart

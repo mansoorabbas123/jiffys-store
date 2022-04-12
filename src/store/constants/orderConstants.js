@@ -1,0 +1,2 @@
+export const GET_ORDER_HISTORY = "GET_ORDER_HISTORY";
+export const ORDER_LOADING = "ORDER_LOADING";

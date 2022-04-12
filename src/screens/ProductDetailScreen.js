@@ -34,7 +34,7 @@ const ProductDetailScreen = () => {
           {/* side one  */}
           <div className="border-2 p-4 w-1/2 m-2" style={{ maxWidth: "25rem" }}>
             <img
-              src={productDetail.image}
+              src={productDetail.productImages[0].url}
               alt={productDetail.title}
               className="w-full"
             />
@@ -51,8 +51,8 @@ const ProductDetailScreen = () => {
             <p className="text-sm md:text-md my-3 text-slate-600">
               {productDetail.description}
             </p>
-            Quantity{" "}
-            <select
+            {/* Quantity{" "} */}
+            {/* <select
               value={qty}
               onChange={(e) => setQty(e.target.value)}
               className="p-2 mr-2 rounded-sm"
@@ -62,7 +62,7 @@ const ProductDetailScreen = () => {
                   {x + 1}
                 </option>
               ))}
-            </select>
+            </select> */}
             <button
               className="my-5 bg-slate-500 text-white p-2 rounded"
               onClick={() => addToCardHandler(productDetail)}
