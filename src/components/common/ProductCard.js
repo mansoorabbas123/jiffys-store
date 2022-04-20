@@ -36,6 +36,7 @@ const ProductCard = ({ product, variant }) => {
        relative`}
       key={product.id}
     >
+      {/* jksdlf;aksdfj */}
       <div className="absolute top-1 left-1" style={{ zIndex: 4 }}>
         <div
           className="p-1 rounded text-white text-sm"
