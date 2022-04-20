@@ -8,8 +8,9 @@ import "react-multi-carousel/lib/styles.css";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { TailSpin } from "react-loader-spinner";
+import { Divider } from "@material-ui/core";
 
-const Products = ({ category_id, list }) => {
+const Products = ({ category_id, category_title, list }) => {
   console.log("category_id", category_id);
   const location = useLocation();
   const dispatch = useDispatch();
@@ -95,8 +96,8 @@ const Products = ({ category_id, list }) => {
     if (productList?.count > 0) {
       return productList.rows.map((product) => {
         return (
-          <div key={product.id} className="my-16">
-            <ProductCard product={product} />
+          <div key={product.id} className="my-8">
+            <ProductCard product={product} variant={"large"} />
           </div>
         );
       });
@@ -117,12 +118,21 @@ const Products = ({ category_id, list }) => {
           <div className="bg-white">
             <Link
               to={`/shop?category_id=${category_id}`}
-              className="flex justify-end p-2"
+              className="flex justify-between items-center p-2 pt-8 pb-5"
             >
-              {/* <h2 className="font-bold ml-4">{category.toUpperCase()}</h2> */}
-              <p className="text-uderline mr-4">View All</p>
+              <h2 className="font-sm sm:font-[700] ml-2 sm:ml-4 text-[1.5rem]">
+                {category_title}
+              </h2>
+              <p className="underline mr-2 sm:mr-4 text-[#888484] hover:text-[#b02e46] font-sm sm:font-[700]">
+                View All
+              </p>
             </Link>
-            <div className="border-b-2 m-auto" style={{ width: "91vw" }}></div>
+            <div
+              className="m-auto w-[97%]"
+              style={{
+                borderBottom: "1px solid #c4c4c4",
+              }}
+            ></div>
             <Carousel
               responsive={responsive}
               arrows={false}

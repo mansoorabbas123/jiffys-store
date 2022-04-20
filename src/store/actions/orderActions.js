@@ -5,6 +5,7 @@ import * as Actions from "../actions";
 
 export const placeOrderAction =
   (orderDetail, navigate) => async (dispatch, getState) => {
+    console.log("orderDetail", orderDetail);
     const { userInfo } = getState();
     const config = {
       headers: {

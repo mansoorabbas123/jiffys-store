@@ -49,7 +49,7 @@ const RegisterComp = ({ variant }) => {
   }, [user]);
 
   return (
-    <div className="w-96 border-2 p-5 rounded-lg mt-10 mx-10">
+    <div className="w-96 border-2 p-5 rounded-lg mt-10 mx-10 bg-white">
       {loading ? (
         <div className="flex justify-center">
           <TailSpin color="#b02e46" height={80} width={80} />
@@ -76,12 +76,13 @@ const RegisterComp = ({ variant }) => {
           </div>
           <p className="text-center">Or</p>
           <form onSubmit={handleSubmit(submit)}>
-            <div className="">
+            <div className="my-2">
               <input
                 type="text"
                 name="name"
                 id=""
-                className="w-full my-1 border-2 p-1"
+                className="w-full my-1 p-1"
+                style={{ borderBottom: "1px solid #c4c4c4", outline: "none" }}
                 placeholder="Name"
                 {...register("name", {
                   required: "name is required",
@@ -95,12 +96,13 @@ const RegisterComp = ({ variant }) => {
                 {errors.name && errors.name.message}
               </span>
             </div>
-            <div className="">
+            <div className="my-2">
               <input
                 type="email"
                 name="email"
                 id=""
-                className="w-full my-1 border-2 p-1"
+                className="w-full my-1 p-1"
+                style={{ borderBottom: "1px solid #c4c4c4", outline: "none" }}
                 placeholder="Email"
                 {...register("email", {
                   required: "email is requird",
@@ -118,12 +120,13 @@ const RegisterComp = ({ variant }) => {
                 {errors.email && errors.email.message}
               </span>
             </div>
-            <div className="">
+            <div className="my-2">
               <input
                 type="password"
                 name="password"
                 id=""
-                className="w-full my-1 border-2 p-1"
+                className="w-full my-1 p-1"
+                style={{ borderBottom: "1px solid #c4c4c4", outline: "none" }}
                 placeholder="Password"
                 {...register("password", {
                   required: "password is required",
@@ -141,12 +144,13 @@ const RegisterComp = ({ variant }) => {
                 {errors.password && errors.password.message}
               </span>
             </div>
-            <div className="">
+            <div className="my-2">
               <input
                 type="password"
                 name="confirmPassword"
                 id=""
-                className="w-full my-1 border-2 p-1"
+                className="w-full my-1  p-1"
+                style={{ borderBottom: "1px solid #c4c4c4", outline: "none" }}
                 placeholder="Confrim Password"
                 {...register("confirmPassword", {
                   required: "confirm password is required",
@@ -164,13 +168,14 @@ const RegisterComp = ({ variant }) => {
                 {errors.confirmPassword && errors.confirmPassword.message}
               </span>
             </div>
-            <div className="">
+            <div className="my-2">
               <input
                 type="number"
                 name="phone"
                 id=""
-                className="w-full my-1 border-2 p-1"
+                className="w-full my-1 p-1"
                 placeholder="Phone"
+                style={{ borderBottom: "1px solid #c4c4c4", outline: "none" }}
                 {...register("phone", {
                   required: "phone number is required",
                   minLength: {

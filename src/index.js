@@ -12,6 +12,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./chakra_theme";
 import { CookiesProvider } from "react-cookie";
 
 ReactDOM.render(
@@ -19,7 +21,9 @@ ReactDOM.render(
     <div>
       <Favicon url={favicon} />
       <CookiesProvider>
-        <App />
+        <ChakraProvider theme={theme}>
+          <App />
+        </ChakraProvider>
       </CookiesProvider>
     </div>
   </Provider>,

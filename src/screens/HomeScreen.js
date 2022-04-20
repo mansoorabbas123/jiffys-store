@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import CarouselComp from "../components/HomeComponents/CarouselCom";
+import CarouselComp2 from "../components/CarouselComp2";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../store/actions";
 import Categories from "../components/HomeComponents/Categories";
@@ -28,12 +29,14 @@ const Home = () => {
 
   return (
     // HomeScreen
-    <div>
+    <div className="mt-[7.5rem] sm:mt-5">
       {/* carousel component  */}
-      <CarouselComp />
+      <div className="w-[99vw]">
+        <CarouselComp />
+      </div>
       {/* categories  */}
 
-      <div className="">
+      {/* <div className="">
         <h2 className="my-10 text-2xl text-slate-700 font-bold text-center">
           {"Categories".toUpperCase()}
         </h2>
@@ -51,26 +54,30 @@ const Home = () => {
                 <Categories category={category} idx={idx} key={idx} />
               ))}
           </div>
-        )}
+        )} */}
 
-        {productCategories && productCategories.length > 1
-          ? productCategories.slice(0, 2).map((category, idx) => {
-              return (
-                <div className="p-4 mt-10" key={category.id}>
-                  <Products category_id={category.id} list={idx + 1} />
-                </div>
-              );
-            })
-          : "categories not found"}
-
-        {/* Products by Categories  */}
-        {/* <div className="p-4 mt-10">
+      {/* Products by Categories  */}
+      {/* <div className="p-4 mt-10">
           <Products category_id={1} list={1} />
         </div>
         <div className="p-4 mt-10">
           <Products category_id={3} list={2} />
         </div> */}
-      </div>
+      {/* </div> */}
+
+      {productCategories && productCategories.length > 1
+        ? productCategories.slice(0, 2).map((category, idx) => {
+            return (
+              <div className="p-4 mt-5 sm:px-14" key={category.id}>
+                <Products
+                  category_id={category.id}
+                  category_title={category.title}
+                  list={idx + 1}
+                />
+              </div>
+            );
+          })
+        : "categories not found"}
     </div>
   );
 };

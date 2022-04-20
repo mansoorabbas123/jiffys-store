@@ -110,7 +110,12 @@ const OtpComp = () => {
                       separator={<span>-</span>}
                       isInputNum={true}
                       containerStyle={{ width: "100%" }}
-                      inputStyle={{ width: "4rem" }}
+                      inputStyle={{
+                        width: "4rem",
+                        borderBottom: "2px solid black",
+                        borderBottom: "1px solid #c4c4c4",
+                        outline: "none",
+                      }}
                       inputRef={ref}
                     />
                   )}

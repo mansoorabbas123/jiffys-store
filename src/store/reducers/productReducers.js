@@ -4,6 +4,7 @@ const initialStateForProducts = {
   productList: [],
   productDetail: null,
   productCategories: [],
+  menuCategories: null,
   productListByCategory: null,
   // productListWithMultiCategory: {},
   homepageProductList_I: null,
@@ -103,6 +104,12 @@ export const products = (state = initialStateForProducts, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case Constants.MENU_CATEGORIES:
+      return {
+        ...state,
+        loading: false,
+        menuCategories: action.payload,
       };
     default:
       return state;

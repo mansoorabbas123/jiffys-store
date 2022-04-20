@@ -5,7 +5,7 @@ import * as Actions from "../../store/actions";
 import "./productCard.css";
 import CartQty from "../CartQty";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, variant }) => {
   const cartReducer = useSelector((state) => state.cart);
   const { cartItems } = cartReducer;
   const dispatch = useDispatch();
@@ -18,19 +18,22 @@ const ProductCard = ({ product }) => {
       return <CartQty product={product} styleVariant="productCard" />;
     } else {
       return (
-        <a
-          className="text-white w-28 rounded ml-2 mb-4 btn mt-2"
+        <button
+          className="text-white w-28 rounded ml-2 mb-4 btn mt-2 p-[5px] pt-2"
           onClick={() => dispatch(Actions.addToCartAction(product, 1))}
         >
           ADD
-        </a>
+        </button>
       );
     }
   };
 
   return (
     <div
-      className=" text-center border my-5 bg-white hover:shadow-md mx-auto w-60 relative"
+      className={`text-center my-5 bg-white hover:shadow-md mx-auto
+       w-40 md:w-40 
+       ${variant == "small" ? "lg:w-52" : "lg:w-60"}
+       relative`}
       key={product.id}
     >
       <div className="absolute top-1 left-1" style={{ zIndex: 4 }}>
@@ -57,7 +60,11 @@ const ProductCard = ({ product }) => {
           style={{ minHeight: "16rem" }}
         >
           <img
-            src={product?.productImages[0].url}
+            src={
+              product.productImages[0]
+                ? product.productImages[0].url
+                : "https://pixabay.com/photos/yellow-carpet-curtain-red-fabric-2847287/"
+            }
             alt=""
             className="w-24 m-auto absolute"
           />
@@ -65,9 +72,12 @@ const ProductCard = ({ product }) => {
       </NavLink>
       <div className="flex flex-col justify-between">
         <NavLink to={`/product/${product.id}`}>
-          <p className="text-md mt-2"> {product.title.slice(0, 20)}....</p>
+          <p className="text-[15px] font-[700] mt-2">
+            {" "}
+            {product.title.slice(0, 20)}....
+          </p>
         </NavLink>
-        <p className=" text-slate-600 text-lg font-bold">$ {product.price}</p>
+        <p className=" text-[#212529] text-lg font-bold">$ {product.price}</p>
         {renderButtons(product)}
       </div>
     </div>

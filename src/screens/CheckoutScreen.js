@@ -26,21 +26,21 @@ const CheckoutScreen = () => {
         >
           <h2 className="font-semibold text-md">Cart Total</h2>
           <div className="flex justify-between my-4">
-            <p className="text-slate-700">TOTAL ITEMS</p>
-            <p className="font-bold text-slate-700">
+            <p className="text-slate-700 text-sm">TOTAL ITEMS</p>
+            <p className="font-bold text-slate-700 text-sm">
               {cartItems &&
                 cartItems.reduce((accu, item) => accu + item.qty, 0)}
             </p>
           </div>
-          <div className="flex justify-between my-4">
+          <div className="flex justify-between my-4 text-sm">
             <p className="text-slate-700">DELIVERY CHARGES</p>
             <p className="font-bold text-slate-700">Rs 0</p>
           </div>
-          <div className="flex justify-between my-4">
+          <div className="flex justify-between my-4 text-sm">
             <p className="text-slate-700">DISCOUNT</p>
             <p className="font-bold text-slate-700">Rs 0</p>
           </div>
-          <div className="flex justify-between my-4">
+          <div className="flex justify-between my-4 text-sm">
             <p className="text-slate-700">TOTAL</p>
             <p className="font-bold text-slate-700">
               Rs{" "}
@@ -51,7 +51,7 @@ const CheckoutScreen = () => {
                 )}
             </p>
           </div>
-          <div className="flex justify-between my-5 mt-8">
+          <div className="flex justify-between my-5 mt-8 text-sm">
             <p className="text-slate-700">GRAND TOTAL</p>
             <p className="font-bold text-slate-700">
               Rs{" "}
@@ -64,12 +64,11 @@ const CheckoutScreen = () => {
           </div>
           <div style={{ borderBottom: "1px solid grey" }}></div>
           <h2 className="font-semibold text-md mt-5">Shipping Mode</h2>
+
           <table>
             <tr>
               <td className="text-slate-500">Normal Delivery (Rs 0) </td>
-              <td>
-                <input type="radio" name="" id="" />
-              </td>
+              <td>{/* <input type="radio" name="" id="" /> */}</td>
             </tr>
             {/* <tr>
               <td className="text-slate-500">Urgent Delivery (Rs 120)</td>

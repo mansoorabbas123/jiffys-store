@@ -4,9 +4,9 @@ import RegisterComp from "../components/RegisterComp";
 
 const RegisterScreen = () => {
   return (
-    <div className="flex flex-col items-center md:flex-row md:justify-center md:items-start m-5 mt-16 pb-16 bg-white">
+    <div className="flex flex-col items-center md:flex-row md:justify-center md:items-center m-5 mt-24 md:mt-16 pb-16 bg-[#f2f2f2]">
       {/* side one  */}
-      <div className=" flex justify-center flex-col text-center mx-10 mt-5">
+      <div className=" fjustify-center flex-col text-center mx-10 mt-10 py-5 px-4 hidden md:flex rounded-lg shadow-sm">
         <img src={LogoImage} alt="logo image" className="w-96" />
         <h1 className="text-2xl" style={{ color: "#b02e46" }}>
           Site Name

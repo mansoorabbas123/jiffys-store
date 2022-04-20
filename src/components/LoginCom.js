@@ -11,44 +11,46 @@ const LoginCom = ({ variant }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const {register, handleSubmit, formState: { errors }} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
 
-  // console.log("form errors",errors);
+  console.log("form errors", errors);
 
-  // const submit = (data) => {
-  //   console.log("form data", data);
-  // }
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const [inputError, setInputError] = useState("");
 
   const userInfoReducer = useSelector((state) => state.userInfo);
   const { error, user, loading } = userInfoReducer;
 
-  const sumbitHandler = () => {
+  const sumbitHandler = (data) => {
+    console.log("data", data);
     const loginInfo = {
-      email,
-      password,
+      email: data.email,
+      password: data.password,
     };
-    console.log("loginInfo in loginComp: ", loginInfo);
+    // console.log("loginInfo in loginComp: ", loginInfo);
     dispatch(Actions.userLoader(true));
     dispatch(Actions.userLoginAction(loginInfo, navigate));
-    setEmail("");
-    setPassword("");
+    // setEmail("");
+    // setPassword("");
   };
 
   useEffect(() => {
     if (user.token) {
       navigate("/");
-    } else if (error) {
-      setInputError(error);
-      // console.log(error.response);
     }
-  }, [user, error]);
+    // } else if (error) {
+    //   setInputError(error);
+    //   // console.log(error.response);
+    // }
+  }, [user]);
 
   return (
-    <div className="w-96 border-2 p-5 rounded-lg mt-10 mx-10">
+    <div className="w-96 border-2 p-5 rounded-lg mt-10 mx-10 bg-white">
       {loading ? (
         <div className="flex justify-center">
           <TailSpin color="#b02e46" height={80} width={80} />
@@ -56,7 +58,7 @@ const LoginCom = ({ variant }) => {
       ) : (
         <div>
           <div className="flex justify-between my-5">
-            <h2 className="text-xl mb-3">Sign in</h2>
+            <h2 className="text-xl mb-3 text-[1.75rem]">Login</h2>
             <p className="mt-1 ">
               <span className="text-slate-400">or </span>
               <Link
@@ -77,38 +79,69 @@ const LoginCom = ({ variant }) => {
             </button>
           </div>
           <p className="text-center my-5">OR</p>
-          <div className="">
-            <label htmlFor="email" className="text-black">
-              Email
+          <div className="my-4">
+            <label
+              htmlFor="email"
+              className="text-black font-[700] uppercase text-[0.9rem]"
+            >
+              Email*
             </label>
             <input
               type="email"
               name="email"
-              id=""
-              className="w-full my-1 border-2 p-1"
+              id="email"
+              {...register("email", {
+                required: "email is required",
+                pattern: {
+                  value:
+                    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/,
+                  message: "email format is incorrect",
+                },
+              })}
+              className="w-full my-1 bg-white p-1 appearance-none outline-none"
+              style={{
+                borderBottom: "1px solid #c4c4c4",
+              }}
               placeholder="enter your email"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              value={email}
-              onFocus={() => setInputError("")}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
           </div>
-          <div className="">
-            <label htmlFor="password" className="text-black">
-              Password
+          <div className="my-4">
+            <label
+              htmlFor="password"
+              className="text-black font-[700] uppercase text-[0.9rem]"
+            >
+              Password*
             </label>
             <input
               type="password"
               name=""
-              id=""
-              className="w-full my-1 border-2 p-1"
-              placeholder="enter your password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              value={password}
-              onFocus={() => setInputError("")}
+              id="password"
+              {...register("password", {
+                required: "password is required",
+                maxLength: {
+                  value: 20,
+                  message: "max length should be 20",
+                },
+                minLength: {
+                  value: 6,
+                  message: "min length should be 6",
+                },
+              })}
+              className="w-full my-1 p-1 appearance-none outline-none"
+              style={{
+                borderBottom: "1px solid #c4c4c4",
+              }}
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
           </div>
+          {/* {error && (
+            <p className="text-red-600 text-sm">{error.response.message}</p>
+          )} */}
           <p>
             <Link
               to="/forgetPassword"
@@ -117,16 +150,10 @@ const LoginCom = ({ variant }) => {
               Forget Password
             </Link>
           </p>
-          {inputError ? (
-            <p className="text-red-500 text-sm">{error.data.message}</p>
-          ) : (
-            ""
-          )}
           <div className="flex justify-end">
             <button
-              onClick={sumbitHandler}
-              className="bg-sky-600 text-white p-1 rounded-md px-3 my-4"
-              style={{ backgroundColor: "#b02e46" }}
+              onClick={handleSubmit(sumbitHandler)}
+              className="bg-sky-600 text-white p-1 rounded-md px-3 pt-2 my-4 btn"
             >
               Sign in
             </button>

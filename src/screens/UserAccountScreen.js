@@ -10,15 +10,26 @@ import { TailSpin } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import moment from "moment";
+import { Input } from "@chakra-ui/react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from "@chakra-ui/react";
 
 // mui modal imports
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
+import Box from "@material-ui/core/Box";
+import Modal from "@material-ui/core/Modal";
+// import Button from "@mui/material/Button";
 import { set, useForm } from "react-hook-form";
 import { NotificationManager } from "react-notifications";
-import { CircularProgress } from "@mui/material";
-// mui style
+import CircularProgress from "@mui/material/CircularProgress"; // mui style
 const style = {
   position: "absolute",
   top: "50%",
@@ -109,7 +120,7 @@ const UserAccountScreen = () => {
 
   return (
     <div>
-      <h1 className="ml-10 py-10 text-3xl">My Account</h1>
+      <h1 className="ml-10 py-14 text-3xl">My Account</h1>
       <div className="flex items-center flex-col">
         {/* account detail box/wrapper  */}
         <div className="w-[92%] bg-white p-5 boxShadow-3xl">
@@ -128,16 +139,18 @@ const UserAccountScreen = () => {
                   boxShadow: "0px 1px 9px -3px rgba(0,0,0,0.58) !important",
                 }}
               >
-                <form className="relative">
+                <form className="relative pt-5">
                   <a
-                    className="absolute top-1 right-0 cursor-pointer"
+                    className="absolute top-0 right-0 cursor-pointer"
                     onClick={handleClose}
                   >
                     <AiOutlineCloseSquare style={{ fontSize: "2rem" }} />
                   </a>
-                  <div>
-                    <label for="name">Name</label>
-                    <input
+                  <div className="my-4">
+                    <label for="name" className="text-slate-400">
+                      Name
+                    </label>
+                    <Input
                       type="text"
                       id="name"
                       {...register("name", {
@@ -149,9 +162,11 @@ const UserAccountScreen = () => {
                     </span>
                   </div>
 
-                  <div>
-                    <label for="phone">Phone</label>
-                    <input
+                  <div className="my-4">
+                    <label for="phone" className="text-slate-400">
+                      Phone
+                    </label>
+                    <Input
                       type="number"
                       id="phone"
                       {...register("phone", {
@@ -163,9 +178,11 @@ const UserAccountScreen = () => {
                     </span>
                   </div>
 
-                  <div>
-                    <label for="address">Address</label>
-                    <input
+                  <div className="my-4">
+                    <label for="address" className="text-slate-400">
+                      Address
+                    </label>
+                    <Input
                       type="text"
                       id="address"
                       {...register("address", {
@@ -177,25 +194,25 @@ const UserAccountScreen = () => {
                     </span>
                   </div>
 
-                  <div>
-                    <a
-                      className="btn my-5"
+                  <div className="my-2">
+                    <button
+                      className="btn my-3 text-white rounded-sm py-2 px-3 pt-3 hover:cursor-pointer"
                       onClick={handleSubmit(updateProfileHandler)}
                     >
                       Update
-                    </a>
+                    </button>
                   </div>
                 </form>
               </Box>
             </Modal>
             {/* ------------------------------------------------------------------- */}
             <h1 className="text-xl mt-2">Account Details</h1>
-            <a
-              className="btn w-30 btn ml-auto"
+            <button
+              className="btn w-30 btn ml-auto text-white rounded-sm px-3 pt-1"
               onClick={() => dispatch(Actions.userLogoutAction())}
             >
-              logout
-            </a>
+              Log Out
+            </button>
           </div>
           <div className="bg-slate-300 w-[100%] h-[1px] m-5 mx-auto "></div>
           {/* content  */}
@@ -272,57 +289,59 @@ const UserAccountScreen = () => {
         </div>
 
         {orderLoading ? (
-          <CircularProgress />
+          <TailSpin />
         ) : orderError ? (
           "not found"
         ) : (
-          <div className="w-[92%] bg-white p-5 boxShadow-3xl mt-10">
+          <div className="w-[92vw] bg-white p-5 boxShadow-3xl mt-10">
             <h1 className="text-xl mt-2">My Orders</h1>
             <div className="bg-slate-300 w-[100%] h-[1px] m-5 mx-auto "></div>
             {/* content  */}
-            <div>
-              <table class="table-auto">
-                <thead className="bg-slate-100">
-                  <tr className="text-center">
-                    <th className="text-center">ORDER #</th>
-                    <th className="text-center">DATE</th>
-                    <th className="text-center">TIME</th>
-                    <th className="text-center">TOTAL</th>
-                    <th className="text-center">STATUS</th>
-                    <th className="text-center">ACTION</th>
-                  </tr>
-                </thead>
-                <tbody>
+            <TableContainer maxWidth={"100%"} overflowX={"auto"}>
+              <Table variant="simple">
+                <Thead className="bg-slate-100">
+                  <Tr className="text-center">
+                    <Th className="text-center">ORDER #</Th>
+                    <Th className="text-center">DATE</Th>
+                    <Th className="text-center">TIME</Th>
+                    <Th className="text-center">TOTAL</Th>
+                    <Th className="text-center">STATUS</Th>
+                    <Th className="text-center">ACTION</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
                   {order_history &&
                     order_history.rows.map((order) => {
                       return (
-                        <tr className="hover:bg-slate-100 text-center">
-                          <td className="text-[#333333c5] text-center">
+                        <Tr className="hover:bg-slate-100 text-center">
+                          <Td className="text-[#333333c5] text-center">
                             {order.id}
-                          </td>
-                          <td className="text-center font-thin text-[#00000071]">
+                          </Td>
+                          <Td className="text-center font-thin text-[#00000071]">
                             {moment(order.dateOrderPlaced).format("MMM Do YY")}
                             {/* 03/28/2022 */}
-                          </td>
-                          <td className="text-center font-thin text-[#00000071]">
+                          </Td>
+                          <Td className="text-center font-thin text-[#00000071]">
                             {moment(order.dateOrderPlaced).format("hh:mm a")}
                             {/* 03:53 PM */}
-                          </td>
-                          <td className="text-center font-bold text-[#b02e46]">
+                          </Td>
+                          <Td className="text-center font-bold text-slate-600">
                             Rs {order.amount}
-                          </td>
-                          <td className="text-center font-bold text-[#b02e46]">
+                          </Td>
+                          <Td className="text-center font-bold text-[#b02e46]">
                             {order.status}
-                          </td>
-                          <td className="text-center">
-                            <a className="btn">View</a>
-                          </td>
-                        </tr>
+                          </Td>
+                          <Td className="text-center">
+                            <button className="btn text-white rounded-sm p-2 pt-3">
+                              View
+                            </button>
+                          </Td>
+                        </Tr>
                       );
                     })}
-                </tbody>
-              </table>
-            </div>
+                </Tbody>
+              </Table>
+            </TableContainer>
           </div>
         )}
       </div>

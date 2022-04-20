@@ -41,7 +41,7 @@ const OrderConfirmation = () => {
       dispatch(Actions.productLoader(true));
       dispatch(
         Actions.addShippingAddress(
-          { city: data.city, address: data.address },
+          { city: data.city, address: data.address, phone: data.phone },
           navigate
         )
       );
@@ -54,6 +54,7 @@ const OrderConfirmation = () => {
     if (shippingAddress.city) {
       setValue("address", shippingAddress.address);
       setValue("city", shippingAddress.city);
+      setValue("phone", shippingAddress.phone);
     }
   }, [shippingAddress]);
 
@@ -100,27 +101,71 @@ const OrderConfirmation = () => {
         <p className="text-slate-700 px-3 py-1">Country</p> */}
 
           {/*conditional*/}
+          <div className="my-5">
+            <label for="address" className="text-black">
+              Address*
+            </label>
+            <input
+              type="text"
+              id="address"
+              placeholder="full address"
+              className="outline-none w-full"
+              style={{
+                borderBottom: "1px solid #c4c4c4",
+              }}
+              {...register("address", {
+                required: { value: true, message: "address is required" },
+              })}
+            />
+            {errors.address && (
+              <p className="text-red-500">{errors.address.message}</p>
+            )}
+          </div>
 
-          <label for="address">Address</label>
-          <input
-            type="text"
-            id="address"
-            {...register("address", {
-              required: { value: true, message: "address is required" },
-            })}
-          />
-          {errors.address && (
-            <p className="text-red-500">{errors.address.message}</p>
-          )}
-          <label for="city">City</label>
-          <input
-            type="text"
-            id="city"
-            {...register("city", {
-              required: { value: true, message: "city is required" },
-            })}
-          />
-          {errors.city && <p className="text-red-500">{errors.city.message}</p>}
+          <div className="my-5">
+            <label for="city" className="text-black">
+              City*
+            </label>
+            <input
+              type="text"
+              id="city"
+              placeholder="city name"
+              className="outline-none w-full"
+              style={{
+                borderBottom: "1px solid #c4c4c4",
+              }}
+              {...register("city", {
+                required: { value: true, message: "city is required" },
+              })}
+            />
+            {errors.city && (
+              <p className="text-red-500">{errors.city.message}</p>
+            )}
+          </div>
+          <div className="my-5">
+            <label for="phone" className="text-black">
+              Phone*
+            </label>
+            <input
+              type="number"
+              id="phone"
+              placeholder="03128841514"
+              className="outline-none w-full"
+              style={{
+                borderBottom: "1px solid #c4c4c4",
+              }}
+              {...register("phone", {
+                required: { value: true, message: "phone is required" },
+                minLength: {
+                  value: 11,
+                  message: "length should be 11",
+                },
+              })}
+            />
+            {errors.phone && (
+              <p className="text-red-500">{errors.phone.message}</p>
+            )}
+          </div>
 
           {/* <label for="postalCode">Postal Code</label>
           <input
@@ -161,7 +206,9 @@ const OrderConfirmation = () => {
         <p className="text-slate-700 px-3 py-1">Country</p>
       </div> */}
         <div className="flex justify-center">
-          <button className="btn">Confrim Shipping Address </button>
+          <button className="rounded-sm p-3 px-4 my-4 btn text-white">
+            Confrim Shipping Address{" "}
+          </button>
         </div>
         {/* <Modal open={open} onClose={() => setOpen(false)}>
           <div className="flex items-center flex-col ">

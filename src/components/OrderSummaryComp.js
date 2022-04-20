@@ -8,6 +8,17 @@ import * as Actions from "../store/actions";
 import { useDispatch } from "react-redux";
 import { TailSpin } from "react-loader-spinner";
 import { Link } from "react-router-dom";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from "@chakra-ui/react";
 
 const OrderSummaryComp = () => {
   const dispatch = useDispatch();
@@ -28,6 +39,7 @@ const OrderSummaryComp = () => {
       const orderDetail = {
         address: shippingAddress.address,
         city: shippingAddress.city,
+        phone: shippingAddress.phone,
         items: cartItems.map((item) => ({
           quantity: item.qty,
           productId: item.id,
@@ -89,39 +101,46 @@ const OrderSummaryComp = () => {
         <div className="border-b-2 mb-3"></div>
       </div>
       <div>
-        <table class="table-auto">
-          <thead className="bg-slate-100">
-            <tr className="text-center">
-              <th className="text-center">NO</th>
-              <th className="text-center">PRODUCT</th>
-              <th className="text-center">NAME</th>
-              <th className="text-center">QUANTITY</th>
-              <th className="text-center">PRICE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartItems.length > 0 &&
-              cartItems.map((item) => {
-                return (
-                  <tr className="hover:bg-slate-100 text-center" key={item.id}>
-                    <td className="text-[#333333c5] text-center">{item.id}</td>
-                    <td className="text-center font-thin text-[#00000071]">
-                      <img src={item.productImages[0].url} className="w-10" />
-                    </td>
-                    <td className="text-center font-thin text-[#00000071]">
-                      {item.title}
-                    </td>
-                    <td className="text-center font-bold text-[#b02e46]">
-                      {item.qty}
-                    </td>
-                    <td className="text-center font-bold text-[#b02e46]">
-                      Rs {item.price}
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
+        <TableContainer maxWidth={"100%"} overflowX={"auto"}>
+          <Table variant="simple">
+            <Thead className="bg-slate-100">
+              <Tr className="text-center">
+                <Th className="text-center">NO</Th>
+                <Th className="text-center">PRODUCT</Th>
+                <Th className="text-center">NAME</Th>
+                <Th className="text-center">QUANTITY</Th>
+                <Th className="text-center">PRICE</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {cartItems.length > 0 &&
+                cartItems.map((item) => {
+                  return (
+                    <Tr
+                      className="hover:bg-slate-100 text-center"
+                      key={item.id}
+                    >
+                      <Td className="text-[#333333c5] text-center">
+                        {item.id}
+                      </Td>
+                      <Td className="text-center font-thin text-[#00000071]">
+                        <img src={item.productImages[0].url} className="w-10" />
+                      </Td>
+                      <Td className="text-center font-thin text-[#00000071]">
+                        {item.title.slice(0, 20)}...
+                      </Td>
+                      <Td className="text-center font-bold text-[#b02e46]">
+                        {item.qty}
+                      </Td>
+                      <Td className="text-center font-bold text-[#b02e46]">
+                        Rs {item.price}
+                      </Td>
+                    </Tr>
+                  );
+                })}
+            </Tbody>
+          </Table>
+        </TableContainer>
       </div>
       <div className="flex justify-center my-10">
         {loading ? (
@@ -136,7 +155,10 @@ const OrderSummaryComp = () => {
                 <p className="ml-5">please add product into cart first</p>
               </div>
             ) : (
-              <button className="btn" onClick={proceedToPayHandler}>
+              <button
+                className="btn text-white rounded-sm p-2 px-3 pt-3"
+                onClick={proceedToPayHandler}
+              >
                 Proceed to pay{" "}
               </button>
             )}
@@ -147,9 +169,9 @@ const OrderSummaryComp = () => {
         <div className="flex items-center flex-col ">
           <img src={successImg} className="text-center mb-5" alt="" />
           <h1 className="text-center text-2xl">Your Order is Complete</h1>
-          <a onClick={() => navigate("/")} className="btn mt-5">
+          <button onClick={() => navigate("/")} className="btn mt-5">
             Continue Shopping
-          </a>
+          </button>
         </div>
       </Modal>
     </div>

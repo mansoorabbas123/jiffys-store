@@ -32,6 +32,7 @@ const PaymentComp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
+    console.log("error message", event);
 
     if (elements == null) {
       setLoader(false);
@@ -45,6 +46,7 @@ const PaymentComp = () => {
       .confirmCardPayment(client_secret, {
         payment_method: {
           card: elements.getElement(CardElement),
+
           // billing_details: {
           //   name: 'Jenny Rosen',
           // },
@@ -99,7 +101,7 @@ const PaymentComp = () => {
             <button
               type="submit"
               disabled={!stripe || !elements}
-              className="my-5 btn"
+              className="rounded-sm py-2  pt-3 px-5 my-4 btn text-white"
             >
               Pay
             </button>
@@ -109,9 +111,12 @@ const PaymentComp = () => {
           <div className="flex items-center flex-col ">
             <img src={successImg} className="text-center mb-5" alt="" />
             <h1 className="text-center text-2xl">Your Order is Complete</h1>
-            <a onClick={() => navigate("/")} className="btn mt-5">
+            <button
+              onClick={() => navigate("/")}
+              className="btn mt-5 px-3 py-2 pt-2 text-white rounded-sm"
+            >
               Continue Shopping
-            </a>
+            </button>
           </div>
         </Modal>
       </div>

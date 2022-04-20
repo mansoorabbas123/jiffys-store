@@ -10,6 +10,7 @@ const ForgetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(null);
 
   const userReducer = useSelector((state) => state.userInfo);
   const { loading } = userReducer;
@@ -17,10 +18,17 @@ const ForgetPassword = () => {
   const submitHandler = () => {
     console.log("email", email);
     if (!email) {
-      NotificationManager.error("Email Not Found");
+      setError("email not found");
+    } else if (
+      !email.match(
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      )
+    ) {
+      setError("email format is incorrect");
     } else {
       dispatch(Actions.userLoader(true));
       dispatch(Actions.forgetPasswordAction(email, navigate));
+      setError(null);
     }
   };
 
@@ -42,23 +50,28 @@ const ForgetPassword = () => {
         </h1>
       </div>
       {/* side two  */}
-      <div className="w-96 border-2 p-5 rounded-lg mt-10 mx-10">
-        <div className="">
+      <div className="w-96 border p-5 rounded-lg mt-10 mx-10">
+        <form className="">
           <input
             type="email"
             name="email"
             id=""
-            className="w-full my-1 border-2 p-1"
+            className="w-full my-1 p-1"
+            style={{ borderBottom: "1px solid #c4c4c4", outline: "none" }}
             placeholder="Enter Your Email Address"
             onChange={(e) => setEmail(e.target.value)}
             required
             value={email}
             // onFocus={() => setInputError("")}
           />
-          <a className="btn w-[100%] mt-5" onClick={submitHandler}>
+          {error && <p className="text-sm text-red-600">{error}</p>}
+          <button
+            className="btn w-[100%] mt-5 text-white p-1 rounded-md px-3 pt-2"
+            onClick={submitHandler}
+          >
             Submit
-          </a>
-        </div>
+          </button>
+        </form>
       </div>
     </div>
   );

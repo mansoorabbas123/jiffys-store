@@ -1,0 +1,8 @@
+.search_border {
+  border: 1px solid #c0c2c9;
+  border-bottom: #c0c2c9 !important;
+}
+
+.search input:focus {
+  border-bottom: #c0c2c9 !important;
+}

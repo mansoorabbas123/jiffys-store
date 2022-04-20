@@ -54,35 +54,44 @@ const NewPasswordScreen = () => {
         </h1>
       </div>
       {/* side two  */}
-      <div className="w-96 border-2 p-5 rounded-lg mt-10 mx-10">
+      <div className="w-96 border p-5 rounded-lg mt-10 mx-10">
         <div className="">
-          <label for="password">New Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className="w-full my-1 border-2 p-1"
-            placeholder="Enter New Password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            value={password}
-            // onFocus={() => setInputError("")}
-          />
-          <label for="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            className="w-full my-1 border-2 p-1"
-            placeholder="Re-type your password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            value={confirmPassword}
-            // onFocus={() => setInputError("")}
-          />
-          <a className="btn w-[100%] mt-5" onClick={submitHandler}>
+          <div className="my-4">
+            <label for="password">New Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              className="w-full my-1 p-1"
+              style={{ borderBottom: "1px solid #c4c4c4", outline: "none" }}
+              placeholder="Enter New Password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              value={password}
+              // onFocus={() => setInputError("")}
+            />
+          </div>{" "}
+          <div className="my-4">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              className="w-full my-1 p-1"
+              style={{ borderBottom: "1px solid #c4c4c4", outline: "none" }}
+              placeholder="Re-type your password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              value={confirmPassword}
+              // onFocus={() => setInputError("")}
+            />
+          </div>
+          <button
+            className="btn w-[100%] mt-5 text-white p-1 rounded-md px-3 pt-2"
+            onClick={submitHandler}
+          >
             Submit
-          </a>
+          </button>
         </div>
       </div>
     </div>
