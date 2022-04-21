@@ -22,6 +22,8 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 // mui modal imports
 import Box from "@material-ui/core/Box";
@@ -63,7 +65,8 @@ const UserAccountScreen = () => {
 
   const userInfoReducer = useSelector((state) => state.userInfo);
   const { clientProfile, loading, user } = userInfoReducer;
-
+  const theme = useTheme();
+  const matches = useMediaQuery("(max-width:870px)");
   const orderReducer = useSelector((state) => state.order);
   const {
     error: orderError,
@@ -137,6 +140,8 @@ const UserAccountScreen = () => {
                 sx={{
                   ...style,
                   boxShadow: "0px 1px 9px -3px rgba(0,0,0,0.58) !important",
+                  // top: matches ? "50%" : "50%",
+                  width: matches ? "91vw" : "auto",
                 }}
               >
                 <form className="relative pt-5">
@@ -293,7 +298,7 @@ const UserAccountScreen = () => {
         ) : orderError ? (
           "not found"
         ) : (
-          <div className="w-[92vw] bg-white p-5 boxShadow-3xl mt-10">
+          <div className="w-[91vw] bg-white p-5 boxShadow-3xl mt-10">
             <h1 className="text-xl mt-2">My Orders</h1>
             <div className="bg-slate-300 w-[100%] h-[1px] m-5 mx-auto "></div>
             {/* content  */}
@@ -325,8 +330,8 @@ const UserAccountScreen = () => {
                             {moment(order.dateOrderPlaced).format("hh:mm a")}
                             {/* 03:53 PM */}
                           </Td>
-                          <Td className="text-center font-bold text-slate-600">
-                            Rs {order.amount}
+                          <Td className="text-center text-[#343a40be] text-[15px] font-[600] font-sans">
+                            $ {order.amount}
                           </Td>
                           <Td className="text-center font-bold text-[#b02e46]">
                             {order.status}

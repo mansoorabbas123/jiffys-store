@@ -58,7 +58,7 @@ const OrderSummaryComp = () => {
   }, [shippingAddress]);
 
   return (
-    <div className="md:w-[40rem] mt-10 mr-4 relative">
+    <div className="w-[23rem] md2:w-full mt-10 mr-4 relative">
       <div className="p-2 mb-5">
         <div className="flex justify-between">
           <h2 className="text-lg p-3 font-bold">Your Information</h2>
@@ -87,13 +87,13 @@ const OrderSummaryComp = () => {
           </Link>
         </div>
         <div className="border-b-2 mb-3"></div>
-        <p className="text-slate-700 ">
+        <p className="text-slate-700 px-3">
           {shippingAddress?.city}, {shippingAddress?.address}
         </p>
       </div>
       <div className="p-2 mb-5">
         <div className="flex justify-between">
-          <h2 className="text-lg p-3">Summary</h2>
+          <h2 className="text-lg p-3 font-bold">Summary</h2>
           {/* <a href="" className="text-lg p-3" style={{ color: "#b02e46" }}>
             Edit
           </a> */}
@@ -132,8 +132,8 @@ const OrderSummaryComp = () => {
                       <Td className="text-center font-bold text-[#b02e46]">
                         {item.qty}
                       </Td>
-                      <Td className="text-center font-bold text-[#b02e46]">
-                        Rs {item.price}
+                      <Td className="text-center text-[15px] font-[600] text-[#343a40be] font-sans">
+                        $ {item.price}
                       </Td>
                     </Tr>
                   );

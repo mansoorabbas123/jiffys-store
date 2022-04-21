@@ -8,7 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { TailSpin } from "react-loader-spinner";
-import { Divider } from "@material-ui/core";
+import style from "./Product.module.css";
 
 const Products = ({ category_id, category_title, list }) => {
   console.log("category_id", category_id);
@@ -34,12 +34,12 @@ const Products = ({ category_id, category_title, list }) => {
     }
     if (!homepageProductList_I && list == 1) {
       dispatch(Actions.productLoader(true));
-      dispatch(Actions.homePageProductsByCategory_I(category_id, 4));
+      dispatch(Actions.homePageProductsByCategory_I(category_id, 20));
     }
 
     if (!homepageProductList_II && list == 2) {
       dispatch(Actions.productLoader(true));
-      dispatch(Actions.homePageProductsByCategory_II(category_id, 4));
+      dispatch(Actions.homePageProductsByCategory_II(category_id, 20));
     }
   }, [homepageProductList_I, homepageProductList_II]);
 
@@ -51,7 +51,7 @@ const Products = ({ category_id, category_title, list }) => {
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 4,
+      items: 5,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -59,7 +59,7 @@ const Products = ({ category_id, category_title, list }) => {
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 2,
     },
   };
 
@@ -71,17 +71,28 @@ const Products = ({ category_id, category_title, list }) => {
       <div className="carousel-button-group">
         {" "}
         <button
-          className={currentSlide === 0 ? "disable" : ""}
+          className={
+            currentSlide === 0
+              ? "disable rounded-full pl-2"
+              : "rounded-full pl-1"
+          }
           onClick={() => previous()}
-          style={{ position: "absolute", left: "0", top: "40%" }}
-          className="rounded-full p-3"
+          style={{
+            position: "absolute",
+            left: "0",
+            top: "40%",
+          }}
         >
           <AiOutlineArrowLeft style={{ fontSize: "1.5rem" }} />
         </button>
         <button
           onClick={() => next()}
-          style={{ position: "absolute", right: "0", top: "40%" }}
-          className="rounded-full p-3"
+          style={{
+            position: "absolute",
+            right: "0",
+            top: "40%",
+          }}
+          className="rounded-full pr-1"
         >
           <AiOutlineArrowRight style={{ fontSize: "1.5rem" }} />
         </button>
@@ -115,7 +126,7 @@ const Products = ({ category_id, category_title, list }) => {
       ) : (
         <>
           {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-2 py-5"> */}
-          <div className="bg-white">
+          <div className="bg-white relative">
             <Link
               to={`/shop?category_id=${category_id}`}
               className="flex justify-between items-center p-2 pt-8 pb-5"
@@ -137,6 +148,8 @@ const Products = ({ category_id, category_title, list }) => {
               responsive={responsive}
               arrows={false}
               customButtonGroup={<ButtonGroup />}
+              // containerClass={`${style.carousel_container} grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5`}
+              // itemClass={`${style.carousel_items}`}
             >
               {renderProducts()}
             </Carousel>

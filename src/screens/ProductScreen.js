@@ -22,6 +22,7 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
+
 import {
   List,
   ListItem,
@@ -115,8 +116,8 @@ const ProductScreen = () => {
         </Breadcrumb>
       </div>
       <div className="bg-white flex flex-col lg:flex-row lg:content-around lg:items-start pt-10">
-        <div className=" p-2 m-2 mr-8 ml-14">
-          <form onSubmit={searchHandler} className="relative w-[18rem]">
+        <div className=" p-2 lg:mr-4 lg:ml-16 lg:w-[22%] md:w-full md:px-0 px-12">
+          <form onSubmit={searchHandler} className="relative md:mx-auto">
             <input
               type="text"
               placeholder="Search products ..."
@@ -139,14 +140,14 @@ const ProductScreen = () => {
             max={5000}
             step={5}
             onChangeEnd={(val) => setPriceRange(val)}
-            // marginTop={"5"}
           >
             <RangeSliderTrack bg="gray.300">
               <RangeSliderFilledTrack bg="brand.100" />
             </RangeSliderTrack>
             <RangeSliderThumb boxSize={4} index={0} bg="brand.100" />
-            <RangeSliderThumb boxSize={4} index={1} bg="brand.100" />
+            <RangeSliderThumb bo xSize={4} index={1} bg="brand.100" />
           </RangeSlider>
+
           <div className="flex content-between opacity-40 text-sm">
             <p className="">{priceRange[0]}</p>
             <p className="ml-auto">{priceRange[1]}</p>
@@ -222,7 +223,7 @@ const ProductScreen = () => {
           </button>
         </div>
         <div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {loading ? (
               <div className="flex content-center items-center">
                 <TailSpin color="#b02e46" height={80} width={80} />

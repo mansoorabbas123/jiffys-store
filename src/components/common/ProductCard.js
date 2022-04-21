@@ -19,7 +19,7 @@ const ProductCard = ({ product, variant }) => {
     } else {
       return (
         <button
-          className="text-white w-28 rounded ml-2 mb-4 btn mt-2 p-[5px] pt-2"
+          className="text-white w-28 rounded mb-4 btn mt-2 p-[4px] pt-2"
           onClick={() => dispatch(Actions.addToCartAction(product, 1))}
         >
           ADD
@@ -30,13 +30,10 @@ const ProductCard = ({ product, variant }) => {
 
   return (
     <div
-      className={`text-center my-5 bg-white hover:shadow-md mx-auto
-       w-40 md:w-40 
-       ${variant == "small" ? "lg:w-52" : "lg:w-60"}
+      className={`text-center my-5 bg-white hover:shadow-md mx-4
        relative`}
       key={product.id}
     >
-      {/* jksdlf;aksdfj */}
       <div className="absolute top-1 left-1" style={{ zIndex: 4 }}>
         <div
           className="p-1 rounded text-white text-sm"
@@ -71,14 +68,25 @@ const ProductCard = ({ product, variant }) => {
           />
         </div>
       </NavLink>
-      <div className="flex flex-col justify-between">
-        <NavLink to={`/product/${product.id}`}>
-          <p className="text-[15px] font-[700] mt-2">
+      <div className="flex flex-col items-baseline mt-2">
+        <h3
+          className="font-[1.7rme] text-left text-[#343a40] font-[500] font-sans my-1"
+          style={{ lineHeight: 1.2 }}
+        >
+          <NavLink
+            to={`/product/${product.id}`}
+            className="text-[15px] font-[700] mt-2"
+          >
             {" "}
             {product.title.slice(0, 20)}....
-          </p>
-        </NavLink>
-        <p className=" text-[#212529] text-lg font-bold">$ {product.price}</p>
+          </NavLink>
+        </h3>
+        <span
+          className=" text-[#343a40be] text-[15px] font-[600] text-left text-lg font-sans"
+          style={{ lineHeight: 1.5 }}
+        >
+          $ {product.price}
+        </span>
         {renderButtons(product)}
       </div>
     </div>

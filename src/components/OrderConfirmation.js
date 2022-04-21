@@ -75,7 +75,7 @@ const OrderConfirmation = () => {
   // }
 
   return (
-    <div className="w-96 mt-10 relative">
+    <div className="w-[23rem] md2:w-full mt-10 relative">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="p-2 mb-5">
           <div className="flex justify-between">
@@ -101,7 +101,7 @@ const OrderConfirmation = () => {
         <p className="text-slate-700 px-3 py-1">Country</p> */}
 
           {/*conditional*/}
-          <div className="my-5">
+          <div className="my-5 px-3">
             <label for="address" className="text-black">
               Address*
             </label>
@@ -122,7 +122,7 @@ const OrderConfirmation = () => {
             )}
           </div>
 
-          <div className="my-5">
+          <div className="my-5 px-3">
             <label for="city" className="text-black">
               City*
             </label>
@@ -142,7 +142,7 @@ const OrderConfirmation = () => {
               <p className="text-red-500">{errors.city.message}</p>
             )}
           </div>
-          <div className="my-5">
+          <div className="my-5 px-3">
             <label for="phone" className="text-black">
               Phone*
             </label>

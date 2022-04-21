@@ -68,7 +68,10 @@ const Home = () => {
       {productCategories && productCategories.length > 1
         ? productCategories.slice(0, 2).map((category, idx) => {
             return (
-              <div className="p-4 mt-5 sm:px-14" key={category.id}>
+              <div
+                className="p-4 mt-5 lg:px-14 md:px-10 sm:px-2"
+                key={category.id}
+              >
                 <Products
                   category_id={category.id}
                   category_title={category.title}

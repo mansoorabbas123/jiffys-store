@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@chakra-ui/react";
+import {
   Table,
   Thead,
   Tbody,
@@ -22,6 +28,7 @@ import {
 import * as Actions from "../store/actions";
 import { TailSpin } from "react-loader-spinner";
 import CartQty from "../components/CartQty";
+import { IoMdCart } from "react-icons/io";
 
 const CartScreen = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -42,13 +49,39 @@ const CartScreen = () => {
 
   return (
     <div>
-      <h1 className="ml-10 py-10 text-3xl">Cart</h1>
+      <div className=" ">
+        <h1 className=" ml-10 text-[40px] leading-[1.3] font-[700] mb-[10px] text-[#b02e46] pt-[5.5rem]">
+          Cart
+        </h1>
+        <Breadcrumb sx={{ marginLeft: "3rem" }}>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
 
+          <BreadcrumbItem>
+            <BreadcrumbLink>Cart</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
+      </div>
       {/* <div className="bg-white"> */}
       {!cartItems.length > 0 ? (
-        <p className="text-slate-600 text-center text-3xl m-5">Cart is empty</p>
+        <div className="text-[#333333] text-center m-5 bg-white mt-[5.3rem] h-[21rem]">
+          <IoMdCart
+            style={{ margin: "auto", fontSize: "10rem", paddingTop: "2rem" }}
+          />
+          <p className="py-6 text-[20px] text-[#333333]">
+            {" "}
+            No item found in cart
+          </p>
+          <button
+            className="px-7 font-[300] font-sans text-md text-white bg-[#333333] hover:bg-white hover:text-[#333333] hover:underline hover:border hover:border-slate-500 py-2 box"
+            onClick={() => navigate("/shop")}
+          >
+            SHOP NOW
+          </button>
+        </div>
       ) : (
-        <div className="flex flex-col items-center lg:flex-row py-10 lg:items-start bg-white px-16 ">
+        <div className="flex flex-col items-center lg:flex-row py-10 lg:items-start bg-white px-16 mt-[5.3rem]">
           {/* side one  */}
           <div className="p-2 ">
             <div className="hidden lg:block border">

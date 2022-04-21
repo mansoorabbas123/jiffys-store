@@ -1,0 +1,9 @@
+.carousel_container {
+  padding-left: 2.1rem;
+  padding-right: 2.1rem;
+  position: static;
+}
+.carousel_items {
+  width: auto !important;
+  min-width: 14rem;
+}
