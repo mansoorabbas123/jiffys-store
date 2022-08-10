@@ -9,13 +9,13 @@ import appleStoreIcon from "../../assets/img/apple-store.svg";
 
 const Footer = () => {
   return (
-    <div>
+    <div className="text-sm md:text-md">
       <div className="p-5 mx-auto" style={{ width: "90vw" }}>
         <h1 className="text-2xl my-4 font-semibold">Top Brands</h1>
         <div className="border-b-4"></div>
         <a
           href=""
-          className="inline-block text-slate-500 hover:text-black hover:text-black text-md mx-3 my-2"
+          className="inline-block text-slate-500 hover:text-black text-md mx-3 my-2"
         >
           Knorr
         </a>
@@ -259,38 +259,29 @@ const Footer = () => {
             {" "}
             <h2 className="text-lg font-semibold">Contact Us</h2>
             <div className="flex justify-start items-center my-3 text-slate-600">
-              <div
-                className="mr-2 hover:text-black"
-                style={{ marginTop: "5px" }}
-              >
+              <div className="mr-2 hover:text-black">
                 <MdEmail />
               </div>
               <a
                 href=""
-                className="hover:text-black hover:underline hover:cursor-pointer"
+                className="hover:text-black hover:underline hover:cursor-pointer mt-[3px]"
               >
                 @gmail.com
               </a>
             </div>
             <div className="flex justify-start items-center my-3 text-slate-600">
-              <div
-                className="mr-2 hover:text-black"
-                style={{ marginTop: "5px" }}
-              >
+              <div className="mr-2 hover:text-black">
                 <AiOutlineWhatsApp />
               </div>
-              <p className="hover:text-black hover:underline hover:cursor-pointer">
+              <p className="hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 +92-0000000000
               </p>
             </div>
             <div className="flex justify-start items-center my-3 text-slate-600">
-              <div
-                className="mr-2 hover:text-black"
-                style={{ marginTop: "5px" }}
-              >
+              <div className="mr-2 hover:text-black">
                 <BiCurrentLocation />
               </div>
-              <p className="hover:text-black hover:underline hover:cursor-pointer">
+              <p className="hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 Islamabad,Pakistan
               </p>
             </div>
@@ -299,24 +290,18 @@ const Footer = () => {
             {" "}
             <h2 className="text-lg font-semibold">Follow Us On</h2>
             <div className="flex justify-start items-center my-3 text-slate-600">
-              <div
-                className="mr-2 hover:text-black"
-                style={{ marginTop: "2px" }}
-              >
+              <div className="mr-2 hover:text-black">
                 <FaFacebookF />
               </div>
-              <p className="hover:text-black hover:underline hover:cursor-pointer">
+              <p className="hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 Facebook
               </p>
             </div>
             <div className="flex justify-start items-center my-3 text-slate-600">
-              <div
-                className="mr-2 hover:text-black"
-                style={{ marginTop: "2px" }}
-              >
+              <div className="mr-2 hover:text-black">
                 <FiInstagram />
               </div>
-              <p className="hover:text-black hover:underline hover:cursor-pointer">
+              <p className="hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 Instagram
               </p>
             </div>
@@ -325,10 +310,10 @@ const Footer = () => {
             {" "}
             <h2 className="text-lg font-semibold">Company</h2>
             <div className="my-3 text-slate-600">
-              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer">
+              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 About Us
               </p>
-              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer">
+              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 Review & Ratings
               </p>
             </div>
@@ -337,13 +322,13 @@ const Footer = () => {
             {" "}
             <h2 className="text-lg font-semibold">Useful Links</h2>
             <div className="my-3 text-slate-600">
-              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer">
+              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 Privacy Policy
               </p>
-              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer">
+              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 Terms & Condition
               </p>
-              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer">
+              <p className="my-3 hover:text-black hover:underline hover:cursor-pointer mt-[3px]">
                 FAQS
               </p>
             </div>

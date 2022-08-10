@@ -17,6 +17,21 @@ import Menu from "@material-ui/core/Menu";
 import Divider from "@mui/material/Divider";
 import { getCategoriesForMenu, productLoader } from "../store/actions";
 import { MdSafetyDivider } from "react-icons/md";
+import { HiOutlineSortDescending } from "react-icons/hi";
+import { IoMdCart } from "react-icons/io";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Button,
+  Input,
+} from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
+import CartQty from "./CartQty";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -38,6 +53,9 @@ const Layout = () => {
 
   // material ui menu for logout popup
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
 
   const searchHandler = (e) => {
     e.preventDefault();
@@ -77,9 +95,12 @@ const Layout = () => {
   return (
     <div className="" style={{ backgroundColor: "#f2f2f2" }}>
       <div style={style.nav} className="relative">
-        <div className="flex justify-between items-center bg-white pb-3 pt-2 ">
+        <div className="flex justify-between items-center bg-white pb-3 pt-[0.7rem] ">
           {/* item1 logo  */}
-          <Link to="/" className="p-3 ml-8 md:ml-16 mt-2 w-[90px] md:w-[100px]">
+          <Link
+            to="/"
+            className="ml-5 mr-6 md:ml-16 mt-2 w-[80px] md:w-[100px]"
+          >
             <img src={logo} alt="logo" className="w-full" />
           </Link>
           {/* item2 search  */}
@@ -91,12 +112,12 @@ const Layout = () => {
               onClick={() => setShowCategory(false)}
             >
               <div
-                className="py-2 px-3 rounded-sm font-sans"
+                className="py-[7px] pb-[8px] px-2 rounded-sm font-sans"
                 style={{
                   backgroundColor: "#b02e46",
                   color: "white",
                   textTransform: "capitalize",
-                  fontSize: "1.1rem",
+                  fontSize: "1rem",
                 }}
               >
                 <div className="flex">
@@ -147,12 +168,12 @@ const Layout = () => {
                 <input
                   type="text"
                   placeholder="Search"
-                  className="placeholder-style browser-default px-5 screen_hidden w-[16rem] lg:w-[24rem]"
+                  className="placeholder-style browser-default px-2 screen_hidden w-[16rem] lg:w-[30rem]"
                   style={{
                     border: "1px solid #C0C2C9",
                     borderRadius: "4px",
-                    paddingTop: "9px",
-                    paddingBottom: "9px",
+                    paddingTop: "7px",
+                    paddingBottom: "6px",
                     outline: "none",
                   }}
                   onChange={(e) => setSearch(e.target.value)}
@@ -168,7 +189,7 @@ const Layout = () => {
                   <ImSearch
                     style={{
                       color: "white",
-                      marginTop: "5px",
+                      marginTop: "3px",
                       marginLeft: "13px",
                       fontSize: "20px",
                     }}
@@ -214,44 +235,179 @@ const Layout = () => {
                   </Link>
                 )}
               </div>
-              <div className="mx-3 relative">
-                <Link to="/cart">
-                  <BsCartFill
-                    style={{
-                      fontSize: "1.5rem",
-                      display: "inline",
-                      marginRight: "5px",
-                    }}
-                  />
-                  <div className="absolute right-0 top-0 bg-red-500 text-white rounded-full px-1 text-xs">
-                    {cartItems.length}
-                  </div>
-                </Link>
+              <div
+                className="mx-3 relative"
+                ref={btnRef}
+                colorScheme="teal"
+                onClick={onOpen}
+              >
+                <BsCartFill
+                  style={{
+                    fontSize: "1.5rem",
+                    display: "inline",
+                    marginRight: "5px",
+                  }}
+                />
+                <Drawer
+                  isOpen={isOpen}
+                  placement="right"
+                  onClose={onClose}
+                  finalFocusRef={btnRef}
+                >
+                  <DrawerOverlay />
+                  <DrawerContent maxW={"25rem"}>
+                    <DrawerCloseButton />
+                    <DrawerHeader
+                      fontSize={"18px"}
+                      fontWeight={"500"}
+                      lineHeight={"28px"}
+                      marginBottom={"20px"}
+                      color={"#b02e46"}
+                      borderBottom={"1px solid #eee"}
+                    >
+                      Cart
+                    </DrawerHeader>
+
+                    <DrawerBody>
+                      {cartItems.length < 1 ? (
+                        <div className="flex flex-col items-center py-[8rem]">
+                          <div>
+                            <IoMdCart
+                              style={{ margin: "auto", fontSize: "6rem" }}
+                            />
+                          </div>
+                          <p className="py-6 text-[20px] text-[#333333]">
+                            No item found in cart
+                          </p>
+                        </div>
+                      ) : (
+                        <>
+                          {cartItems.map((item) => {
+                            return (
+                              <div className="my-4">
+                                <div
+                                  className="flex my-2"
+                                  id="container"
+                                  key={item.id}
+                                >
+                                  <div className="px-2 w-14" id="item_1">
+                                    <img
+                                      src={item.productImages[0].url}
+                                      // className="w-full"
+                                      style={{ width: "100%" }}
+                                    />
+                                  </div>
+                                  <div className="flex-col px-2" id="item_2">
+                                    <h5 className="text-[15px] leading-[17px] mb-[0.5rem] font-[500] font-sans text-[rgba(0,0,0,.85)]">
+                                      {item.title}
+                                    </h5>
+                                    <div className="">
+                                      <CartQty
+                                        product={item}
+                                        styleVariant="productCard"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  className="m-auto w-[97%]"
+                                  style={{
+                                    borderBottom: "1px solid #eee",
+                                  }}
+                                ></div>
+                              </div>
+                            );
+                          })}
+                          {cartItems.length < 1 ? (
+                            <></>
+                          ) : (
+                            <div className="w-full relative my-3">
+                              <div
+                                className="m-auto w-[97%]"
+                                style={{
+                                  borderBottom: "1px solid #eee",
+                                }}
+                              ></div>
+                              <div className="flex content-between my-2">
+                                <div className="text-[16px] font-[600] leading-[25px]">
+                                  Subtotal
+                                </div>
+                                <div className="absolute top-2 right-0 text-[16px] font-[600] leading-[25px]">
+                                  ${" "}
+                                  {cartItems
+                                    .reduce(
+                                      (acc, item) =>
+                                        acc + item.qty * item.price,
+                                      0
+                                    )
+                                    .toFixed(2)}
+                                </div>
+                              </div>
+                              <div
+                                className="m-auto w-[97%]"
+                                style={{
+                                  borderBottom: "1px solid #eee",
+                                }}
+                              ></div>
+                            </div>
+                          )}
+                          <button
+                            className="btn w-full p-1 rounded-sm pt-2 my-3 text-white"
+                            onClick={() => {
+                              onClose();
+                              navigate("/cart");
+                            }}
+                          >
+                            VIEW CART
+                          </button>
+                          <button
+                            className="btn w-full p-1 rounded-sm pt-2 text-white"
+                            onClick={() => {
+                              onClose();
+                              navigate("/checkout");
+                            }}
+                          >
+                            CHECKOUT
+                          </button>
+                        </>
+                      )}
+                    </DrawerBody>
+                  </DrawerContent>
+                </Drawer>
+                <div className="absolute right-0 top-0 bg-red-500 text-white rounded-full px-1 text-xs">
+                  {cartItems.length}
+                </div>
               </div>
             </div>
           </div>
         </div>
         {/* item2 search  */}
-        <div className="content-center items-center relative flex sm:hidden ml-[10px] pb-5">
+        <div
+          id="search"
+          className="content-center items-center relative flex sm:hidden ml-5 pb-5"
+        >
           <div
-            className="flex"
+            className="flex w-full"
+            id="search_item"
             onMouseEnter={() => setShowCategory(true)}
             onMouseLeave={() => setShowCategory(false)}
             onClick={() => setShowCategory(false)}
           >
             <div
-              className="py-[4px] px-[6px] rounded-sm font-sans text-[15px] capitalize text-white bg-[#b02e46]"
+              className="py-[2px] px-[6px] rounded-sm font-sans text-[15px] capitalize text-white bg-[#b02e46]"
               onClick={() => setShowCategory((prv) => !prv)}
             >
               <div className="flex">
-                <p>Categories</p>{" "}
-                <AiOutlineDown
-                  style={{
-                    display: "block",
-                    marginTop: "6px",
-                    marginLeft: "5px",
-                  }}
-                />
+                <p>
+                  <HiOutlineSortDescending
+                    style={{
+                      display: "block",
+                      marginTop: "6px",
+                      marginLeft: "5px",
+                      fontSize: "24px",
+                    }}
+                  />
+                </p>{" "}
               </div>
             </div>
             {showCategory && (
@@ -284,14 +440,14 @@ const Layout = () => {
           </div>
 
           <div
-            className="ml-2 relative"
+            className="mr-5 relative"
             // style={{ paddingRight: 0, marginRight: 0 }}
           >
-            <form onSubmit={searchHandler}>
+            <form onSubmit={searchHandler} className="">
               <input
                 type="text"
                 placeholder="Search"
-                className="placeholder-style-small browser-default py-[3px] px-[1px] rounded-sm screen_hidden border w-[15rem]"
+                className="placeholder-style-small browser-default py-[3px] pt-[5px] px-[1px] rounded-sm screen_hidden border w-[16rem]"
                 style={{
                   // border: "1px solid #C0C2C9",
                   // borderRadius: "4px",
@@ -330,80 +486,3 @@ const Layout = () => {
 };
 
 export default Layout;
-
-// import * as React from 'react';
-// import Box from '@mui/material/Box';
-// import Drawer from '@mui/material/Drawer';
-// import Button from '@mui/material/Button';
-// import List from '@mui/material/List';
-// import Divider from '@mui/material/Divider';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
-
-// export default function TemporaryDrawer() {
-//   const [state, setState] = React.useState({
-//     top: false,
-//     left: false,
-//     bottom: false,
-//     right: false,
-//   });
-
-//   const toggleDrawer = (anchor, open) => (event) => {
-//     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-//       return;
-//     }
-
-//     setState({ ...state, [anchor]: open });
-//   };
-
-//   const list = (anchor) => (
-//     <Box
-//       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-//       role="presentation"
-//       onClick={toggleDrawer(anchor, false)}
-//       onKeyDown={toggleDrawer(anchor, false)}
-//     >
-//       <List>
-//         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-//           <ListItem button key={text}>
-//             <ListItemIcon>
-//               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-//             </ListItemIcon>
-//             <ListItemText primary={text} />
-//           </ListItem>
-//         ))}
-//       </List>
-//       <Divider />
-//       <List>
-//         {['All mail', 'Trash', 'Spam'].map((text, index) => (
-//           <ListItem button key={text}>
-//             <ListItemIcon>
-//               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-//             </ListItemIcon>
-//             <ListItemText primary={text} />
-//           </ListItem>
-//         ))}
-//       </List>
-//     </Box>
-//   );
-
-//   return (
-//     <div>
-//       {['left', 'right', 'top', 'bottom'].map((anchor) => (
-//         <React.Fragment key={anchor}>
-//           <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-//           <Drawer
-//             anchor={anchor}
-//             open={state[anchor]}
-//             onClose={toggleDrawer(anchor, false)}
-//           >
-//             {list(anchor)}
-//           </Drawer>
-//         </React.Fragment>
-//       ))}
-//     </div>
-//   );
-// }

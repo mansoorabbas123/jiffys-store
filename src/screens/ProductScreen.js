@@ -23,6 +23,9 @@ import {
   RangeSliderThumb,
 } from "@chakra-ui/react";
 
+import Slider, { Range } from "rc-slider";
+import "rc-slider/assets/index.css";
+
 import {
   List,
   ListItem,
@@ -44,20 +47,41 @@ import style from "./ProductScreen.module.css";
 import { IoIosSearch } from "react-icons/io";
 
 const ProductScreen = () => {
+  const sliderStyle = { width: "100%", padding: 5 };
+  const marks = {
+    1000: "0°C",
+    25: "26°C",
+    50: "37°C",
+    75: "50°C",
+    5000: "100°C",
+  };
+
+  function log(value) {
+    console.log(value); //eslint-disable-line
+  }
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const category_id = searchParams.get("category_id")
     ? searchParams.get("category_id")
-    : null;
-  const search = searchParams.get("search") ? searchParams.get("search") : null;
-  const price = searchParams.get("price") ? searchParams.get("price") : null;
+    : "";
+  const search = searchParams.get("search") ? searchParams.get("search") : "";
+  const price = searchParams.get("price") ? searchParams.get("price") : "";
+
   const dispatch = useDispatch();
   const productReducer = useSelector((state) => state.products);
-  const { error, loading, productList } = productReducer;
+  const { error, loading, productList, minPrice, maxPrice } = productReducer;
   const [searchInput, setSearchInput] = useState("");
   const [priceRange, setPriceRange] = useState([0, 5000]);
   const [currPage, setCurrPage] = useState(1);
 
+  const [variables, setVariables] = useState({
+    search,
+    category_id,
+    price,
+    page: currPage,
+  });
+
+  console.log("category id ", variables.category_id);
   const {
     error: menuError,
     menuCategories,
@@ -66,16 +90,25 @@ const ProductScreen = () => {
 
   const searchHandler = (e) => {
     e.preventDefault();
-    navigate(`/shop?search=${searchInput}`);
+    setVariables({ ...variables, search: searchInput });
   };
 
   const priceRangeHandler = () => {
-    navigate(`/shop?price=${priceRange[0]}-${priceRange[1]}`);
+    console.log("price", priceRange);
+    setVariables({
+      ...variables,
+      price: priceRange,
+    });
   };
 
   const clearFilterHandler = () => {
     setCurrPage(0);
-    navigate("/shop");
+    setVariables({
+      search: "",
+      category_id: "",
+      price: "",
+      page: 0,
+    });
   };
 
   const pageChangeHandler = (pg) => {
@@ -83,11 +116,11 @@ const ProductScreen = () => {
   };
 
   useEffect(() => {
+    // const params = new URLSearchParams({[name]: value });
+    //  history.replace({ pathname: location.pathname, search: params.toString() });
     dispatch(Actions.productLoader(true));
-    dispatch(
-      Actions.productListAction(category_id, search, price, currPage, 10)
-    );
-  }, [category_id, search, price, currPage]);
+    dispatch(Actions.productListAction(variables, 10));
+  }, [variables, currPage, category_id]);
   if (error) {
     return "error";
   }
@@ -109,14 +142,15 @@ const ProductScreen = () => {
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Home</BreadcrumbLink>
           </BreadcrumbItem>
-
           <BreadcrumbItem>
             <BreadcrumbLink href="">Shop</BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
       </div>
-      <div className="bg-white flex flex-col lg:flex-row lg:content-around lg:items-start pt-10">
-        <div className=" p-2 lg:mr-4 lg:ml-16 lg:w-[22%] md:w-full md:px-0 px-12">
+      {/* <div className="bg-white flex flex-col lg:flex-row lg:content-around lg:items-start pt-10"> */}
+      <div className="bg-white flex lg:flex-row content-center flex-col pt-10">
+        {/* <div className=" p-2 lg:mr-4 lg:ml-16 lg:w-[22%] md:w-full md:px-0 px-12"> */}
+        <div className="basis-[30%] lg:ml-12 lg:mx-0 mx-14 mt-4">
           <form onSubmit={searchHandler} className="relative md:mx-auto">
             <input
               type="text"
@@ -138,15 +172,30 @@ const ProductScreen = () => {
             defaultValue={[0, 5000]}
             min={0}
             max={5000}
-            step={5}
+            // step={5}
+            minStepsBetweenThumbs={5}
             onChangeEnd={(val) => setPriceRange(val)}
           >
             <RangeSliderTrack bg="gray.300">
               <RangeSliderFilledTrack bg="brand.100" />
             </RangeSliderTrack>
             <RangeSliderThumb boxSize={4} index={0} bg="brand.100" />
-            <RangeSliderThumb bo xSize={4} index={1} bg="brand.100" />
+            <RangeSliderThumb boxSize={4} index={1} bg="brand.100" />
           </RangeSlider>
+          {/* 
+          <div style={sliderStyle}>
+            <p>
+              Range Slider with marks, `step=null`, pushable, draggableTrack
+            </p>
+            <Slider
+              dots
+              min={0}
+              marks={marks}
+              step={5}
+              onChange={log}
+              defaultValue={20}
+            />
+          </div> */}
 
           <div className="flex content-between opacity-40 text-sm">
             <p className="">{priceRange[0]}</p>
@@ -222,8 +271,41 @@ const ProductScreen = () => {
             Remove Filters
           </button>
         </div>
-        <div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        {/* <div> */}
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"> */}
+        {/* <div className="flex flex-col basis-[70%] mx-7 content-center">
+          <div className="flex content-around flex-wrap sm:content-center">
+            {loading ? (
+              <div className="flex content-center items-center">
+                <TailSpin color="#b02e46" height={80} width={80} />
+              </div>
+            ) : (
+              productList?.count &&
+              productList.rows.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  variant={"small"}
+                />
+              ))
+            )}
+          </div>
+          <div className="my-4 flex justify-center">
+            {loading ? (
+              ""
+            ) : (
+              <Pagination
+                current={currPage}
+                pageSize={10}
+                total={productList.count}
+                onChange={(pg) => pageChangeHandler(pg)}
+              />
+            )}
+          </div>
+        </div> */}
+
+        <div className={`basis-[70%] mx-7`}>
+          <div className={` ${style.cards}`}>
             {loading ? (
               <div className="flex content-center items-center">
                 <TailSpin color="#b02e46" height={80} width={80} />

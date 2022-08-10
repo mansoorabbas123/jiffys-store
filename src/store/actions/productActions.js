@@ -26,53 +26,52 @@ export const productLoader = (value) => {
 //   }
 // };
 
-export const productListAction =
-  (category_id, search, price, page, limit) => async (dispatch) => {
-    console.log("search", search);
-    if (page == 0) {
-      page = 0;
-    } else {
-      --page;
-    }
-    console.log("param", {
-      page,
+export const productListAction = (variables, limit) => async (dispatch) => {
+  console.log("price", variables.price);
+  if (variables.page == 0) {
+    variables.page = 0;
+  } else {
+    --variables.page;
+  }
+  console.log("param", {
+    page: variables.page,
+    limit,
+    category_id: variables.category_id ? variables.category_id : "",
+    title: variables.search ? variables.search : "",
+    price: variables.price
+      ? {
+          lowerLimit: variables.price[0],
+          upperLimit: variables.price[1],
+        }
+      : {},
+  });
+  try {
+    const { data } = await axios.post(`${Domain}/api/product/view`, {
+      page: variables.page,
       limit,
-      category_id: category_id ? category_id : "",
-      title: search ? search : "",
-      price: price
+      category_id: variables.category_id ? variables.category_id : "",
+      title: variables.search ? variables.search : "",
+      price: variables.price
         ? {
-            lowerLimit: parseInt(price.split("-")[0]),
-            upperLimit: parseInt(price.split("-")[1]),
+            lowerLimit: variables.price[0],
+            upperLimit: variables.price[1],
           }
         : {},
     });
-    try {
-      const { data } = await axios.post(`${Domain}/api/product/view`, {
-        page,
-        limit,
-        category_id: category_id ? category_id : "",
-        title: search ? search : "",
-        price: price
-          ? {
-              lowerLimit: parseInt(price.split("-")[0]),
-              upperLimit: parseInt(price.split("-")[1]),
-            }
-          : {},
-      });
-      console.log("data", data);
-      dispatch({
-        type: Constants.PRODUCT_LIST,
-        payload: data.result,
-      });
-    } catch (error) {
-      console.log(error.message);
-      console.log("productListAction error response", error.response);
-      dispatch({
-        type: Constants.PRODUCT_LIST_FAIL,
-        payload: error,
-      });
-    }
-  };
+    console.log("data", data);
+    dispatch({
+      type: Constants.PRODUCT_LIST,
+      payload: data.result,
+    });
+  } catch (error) {
+    console.log(error.message);
+    console.log("productListAction error response", error.response);
+    dispatch({
+      type: Constants.PRODUCT_LIST_FAIL,
+      payload: error,
+    });
+  }
+};
 
 export const productDetailAction = (id) => async (dispatch) => {
   try {

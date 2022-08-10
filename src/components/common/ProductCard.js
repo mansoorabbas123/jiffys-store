@@ -19,7 +19,9 @@ const ProductCard = ({ product, variant }) => {
     } else {
       return (
         <button
-          className="text-white w-28 rounded mb-4 btn mt-2 p-[4px] pt-2"
+          className={`text-white w-28 rounded mb-4 btn mt-2 p-[4px] ${
+            variant === "homescreen" ? "pt-2" : ""
+          } `}
           onClick={() => dispatch(Actions.addToCartAction(product, 1))}
         >
           ADD
@@ -34,9 +36,9 @@ const ProductCard = ({ product, variant }) => {
        relative`}
       key={product.id}
     >
-      <div className="absolute top-1 left-1" style={{ zIndex: 4 }}>
+      <div className="absolute top-1 left-1 m-2" style={{ zIndex: 4 }}>
         <div
-          className="p-1 rounded text-white text-sm"
+          className="p-1 rounded text-white text-xs"
           style={{
             background: "#b02e46",
             boxShadow: "1px 2px 5px 0px rgba(0,0,0,0.75)",
@@ -45,7 +47,7 @@ const ProductCard = ({ product, variant }) => {
           4% OFF
         </div>
         <div
-          className="p-1 rounded mt-2 text-white bg-lime-500 text-sm"
+          className="p-1 rounded mt-2 text-white bg-lime-500 text-xs"
           style={{ boxShadow: "1px 2px 5px 0px rgba(0,0,0,0.75)" }}
         >
           84 pcs
@@ -68,7 +70,7 @@ const ProductCard = ({ product, variant }) => {
           />
         </div>
       </NavLink>
-      <div className="flex flex-col items-baseline mt-2">
+      <div className="flex flex-col items-baseline mt-2 p-2">
         <h3
           className="font-[1.7rme] text-left text-[#343a40] font-[500] font-sans my-1"
           style={{ lineHeight: 1.2 }}

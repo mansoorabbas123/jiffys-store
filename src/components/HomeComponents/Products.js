@@ -55,11 +55,11 @@ const Products = ({ category_id, category_title, list }) => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 3,
+      items: 2,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 2,
+      items: 1,
     },
   };
 
@@ -108,7 +108,7 @@ const Products = ({ category_id, category_title, list }) => {
       return productList.rows.map((product) => {
         return (
           <div key={product.id} className="my-8">
-            <ProductCard product={product} variant={"large"} />
+            <ProductCard product={product} variant={"homescreen"} />
           </div>
         );
       });
@@ -150,6 +150,8 @@ const Products = ({ category_id, category_title, list }) => {
               customButtonGroup={<ButtonGroup />}
               // containerClass={`${style.carousel_container} grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5`}
               // itemClass={`${style.carousel_items}`}
+              // containerClass=""
+              // itemClass={style.carousel_items}
             >
               {renderProducts()}
             </Carousel>
